@@ -70,7 +70,7 @@ bool Player::Update()
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
 	int speed = 5; 
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
+	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
 
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
@@ -81,17 +81,19 @@ bool Player::Update()
 	}
 	
 	//Move left
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
+
 		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
+
 	}
 
 	//Move right
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) 
 	{
 		pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
 		
@@ -122,9 +124,10 @@ bool Player::Update()
 		}
 	}
 
-	if (pbody->body->GetLinearVelocity().x > 0 && pbody->body->GetLinearVelocity().x < 0.5f) {
+	if (pbody->body->GetLinearVelocity().x > -0.5f && pbody->body->GetLinearVelocity().x < 0.5f ) {
 		pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
 	}
+
 	//Set the velocity of the pbody of the player
 	//pbody->body->SetLinearVelocity(vel);
 
