@@ -49,6 +49,18 @@ bool Player::Start() {
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
+	inAir = false;
+
+	return true;
+}
+
+// Called each loop iteration
+bool Player::PreUpdate()
+{
+	position.x = pbody->body->GetPosition().x;
+	position.y = pbody->body->GetPosition().y;
+
+
 	return true;
 }
 
@@ -57,7 +69,7 @@ bool Player::Update()
 
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
-	int speed = 10; 
+	int speed = 5; 
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
 
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
@@ -67,17 +79,55 @@ bool Player::Update()
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		//
 	}
+	
+	//Move left
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+	{
+		pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
+	}
+
+	//Move right
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
+	{
+		pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
 		
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed, -GRAVITY_Y);
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	{
+		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed, -GRAVITY_Y);
+	//Jump
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		if (!inAir)
+		{
+			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
+			pbody->body->ApplyForceToCenter({ 0, -120 }, true);
+			//app->audio->PlayFx(jump_sound);
+			inAir = true;
+			djump = true;
+		}
+		//Double jump
+		else if (djump)
+		{
+			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
+			pbody->body->ApplyForceToCenter({ 0, -120 }, true);
+			//app->audio->PlayFx(jump_sound);
+			djump = false;
+		}
 	}
 
+	if (pbody->body->GetLinearVelocity().x > 0 && pbody->body->GetLinearVelocity().x < 0.5f) {
+		pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
+	}
 	//Set the velocity of the pbody of the player
-	pbody->body->SetLinearVelocity(vel);
+	//pbody->body->SetLinearVelocity(vel);
+
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -106,6 +156,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
+			inAir = false;
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
@@ -113,5 +164,5 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	}
 	
 
-
+	
 }
