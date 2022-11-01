@@ -58,7 +58,7 @@ void Map::Draw()
     while (mapLayerItem != NULL) {
 
         //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
-        if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) {
+        if (mapLayerItem->data->properties.GetProperty("draw") != NULL && mapLayerItem->data->properties.GetProperty("draw")->value) {
 
             for (int x = 0; x < mapLayerItem->data->width; x++)
             {
