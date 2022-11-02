@@ -91,6 +91,20 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 1;
 
+	//Camera movement with the player
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->scene->player->position.x >= 400 && app->scene->player->position.x <= 6000)
+		app->render->camera.x -= 4;
+
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->scene->player->position.x >= 400 && app->scene->player->position.x <= 6000)
+		app->render->camera.x += 4;
+
+	//Camera off map adjustment
+	if (app->render->camera.x > 0)
+		app->render->camera.x = 0;
+
+	if (app->render->camera.x > 6001)
+		app->render->camera.x = 6001;
+
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map
