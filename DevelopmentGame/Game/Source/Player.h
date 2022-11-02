@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -46,6 +47,17 @@ private:
 	float jumpForce = 20.0f;
 
 	int pickCoinFxId;
+
+	// The pointer to the current player animation
+	// It will be switched depending on the player's movement direction
+	Animation* currentAnimation = nullptr;
+
+	// A set of animations
+	Animation idleAnim;
+	Animation forwardAnim;
+	Animation backwardAnim;
+	Animation jumpAnim;
+	Animation doublejumpAnim;
 
 };
 

@@ -29,6 +29,19 @@ bool Player::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 
+	// idle animation (is just one frame)
+	idleAnim.PushBack({ 5, 5, 72, 68 });
+	idleAnim.speed = 0.2f;
+
+	// walk forward animation (arcade sprite sheet)
+	forwardAnim.PushBack({ 5, 209, 80, 70 });
+	forwardAnim.PushBack({ 89, 209, 80, 70 });
+	forwardAnim.PushBack({ 173, 209, 80, 70 });
+	forwardAnim.PushBack({ 257, 209, 80, 70 });
+	forwardAnim.PushBack({ 341, 209, 80, 70 });
+	forwardAnim.PushBack({ 425, 209, 80, 70 });
+	forwardAnim.speed = 0.1f;
+
 	return true;
 }
 
@@ -66,6 +79,8 @@ bool Player::PreUpdate()
 
 bool Player::Update()
 {
+	// Reset the currentAnimation back to idle before updating the logic
+	currentAnimation = &idleAnim;
 
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
@@ -96,7 +111,7 @@ bool Player::Update()
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
 	{
 		pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
-		
+		currentAnimation = &forwardAnim;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
