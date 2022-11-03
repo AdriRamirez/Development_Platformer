@@ -191,38 +191,7 @@ bool Map::Load()
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
     
-    // Create colliders
-    //First part of the map
-    PhysBody* c1 = app->physics->CreateRectangle(415, 544, 830, 64, STATIC);
-    c1->ctype = ColliderType::PLATFORM;
-    PhysBody* c2 = app->physics->CreateRectangle(832 + 48, 544 - 32, 96, 128, STATIC);
-    c2->ctype = ColliderType::PLATFORM;
-    PhysBody* c3 = app->physics->CreateRectangle(928 + 48, 576 - 96, 96, 192, STATIC);
-    c3->ctype = ColliderType::PLATFORM;
-    PhysBody* c4 = app->physics->CreateRectangle(1024 + 176, 576 - 32, 352, 64, STATIC);
-    c4->ctype = ColliderType::PLATFORM;
-    PhysBody* c5 = app->physics->CreateRectangle(1120 + 80, 384 - 16, 160, 32, STATIC);
-    c5->ctype = ColliderType::PLATFORM;
-    PhysBody* c6 = app->physics->CreateRectangle(1376 + 48, 576 - 144, 96, 288, STATIC);
-    c6->ctype = ColliderType::PLATFORM;
-    PhysBody* c7 = app->physics->CreateRectangle(1472 + 48, 576 - 112, 96, 224, STATIC);
-    c7->ctype = ColliderType::PLATFORM;
-
-    //Second part 
-    PhysBody* c8 = app->physics->CreateRectangle(1664 + 48, 576 - 96, 96, 192, STATIC);
-    c8->ctype = ColliderType::PLATFORM;
-    PhysBody* c9 = app->physics->CreateRectangle(1856 + 32, 576 - 80, 64, 160, STATIC);
-    c9->ctype = ColliderType::PLATFORM;
-    PhysBody* c10 = app->physics->CreateRectangle(2016 + 80, 576 - 64, 160, 128, STATIC);
-    c10->ctype = ColliderType::PLATFORM;
-    PhysBody* c11 = app->physics->CreateRectangle(2176 + 208, 576 - 32, 416, 64, STATIC);
-    c11->ctype = ColliderType::PLATFORM;
-    PhysBody* c12 = app->physics->CreateRectangle(2304 + 80, 416 - 16, 160, 32, STATIC);
-    c12->ctype = ColliderType::PLATFORM;
-    PhysBody* c13 = app->physics->CreateRectangle(2592 + 80, 576 - 144, 160, 288, STATIC);
-    c13->ctype = ColliderType::PLATFORM;
-    PhysBody* c14 = app->physics->CreateRectangle(2176 + 208, 576 - 32, 416, 64, STATIC);
-    c14->ctype = ColliderType::PLATFORM;
+    CollidersLevel1();
 
     if(ret == true)
     {
@@ -379,6 +348,84 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     return ret;
 }
 
+void Map::CollidersLevel1() {
+    // Create colliders
+//First part of the map
+    PhysBody* c1 = app->physics->CreateRectangle(415, 544, 830, 64, STATIC);
+    c1->ctype = ColliderType::PLATFORM;
+    PhysBody* c2 = app->physics->CreateRectangle(832 + 48, 544 - 32, 96, 128, STATIC);
+    c2->ctype = ColliderType::PLATFORM;
+    PhysBody* c3 = app->physics->CreateRectangle(928 + 48, 576 - 96, 96, 192, STATIC);
+    c3->ctype = ColliderType::PLATFORM;
+    PhysBody* c4 = app->physics->CreateRectangle(1024 + 176, 576 - 32, 352, 64, STATIC);
+    c4->ctype = ColliderType::PLATFORM;
+    PhysBody* c5 = app->physics->CreateRectangle(1120 + 80, 384 - 16, 160, 32, STATIC);
+    c5->ctype = ColliderType::PLATFORM;
+    PhysBody* c6 = app->physics->CreateRectangle(1376 + 48, 576 - 144, 96, 288, STATIC);
+    c6->ctype = ColliderType::PLATFORM;
+    PhysBody* c7 = app->physics->CreateRectangle(1472 + 48, 576 - 112, 96, 224, STATIC);
+    c7->ctype = ColliderType::PLATFORM;
+
+    //Second part 
+    PhysBody* c8 = app->physics->CreateRectangle(1664 + 48, 576 - 96, 96, 192, STATIC);
+    c8->ctype = ColliderType::PLATFORM;
+    PhysBody* c9 = app->physics->CreateRectangle(1856 + 32, 576 - 80, 64, 160, STATIC);
+    c9->ctype = ColliderType::PLATFORM;
+    PhysBody* c10 = app->physics->CreateRectangle(2016 + 80, 576 - 64, 160, 128, STATIC);
+    c10->ctype = ColliderType::PLATFORM;
+    PhysBody* c11 = app->physics->CreateRectangle(2176 + 208, 576 - 32, 416, 64, STATIC);
+    c11->ctype = ColliderType::PLATFORM;
+    PhysBody* c12 = app->physics->CreateRectangle(2304 + 80, 416 - 16, 160, 32, STATIC);
+    c12->ctype = ColliderType::PLATFORM;
+    PhysBody* c13 = app->physics->CreateRectangle(2592 + 80, 576 - 144, 160, 288, STATIC);
+    c13->ctype = ColliderType::PLATFORM;
+    PhysBody* c14 = app->physics->CreateRectangle(2752 + 256, 576 - 32, 512, 64, STATIC);
+    c14->ctype = ColliderType::PLATFORM;
+    PhysBody* c15 = app->physics->CreateRectangle(2752 + 64, 416 - 80, 128, 160, STATIC);
+    c15->ctype = ColliderType::PLATFORM;
+    PhysBody* c16 = app->physics->CreateRectangle(2752 + 144, 256 - 32, 288, 64, STATIC);
+    c16->ctype = ColliderType::PLATFORM;
+    PhysBody* c17 = app->physics->CreateRectangle(2976 + 80, 416 - 32, 160, 64, STATIC);
+    c17->ctype = ColliderType::PLATFORM;
+    PhysBody* c18 = app->physics->CreateRectangle(3136 + 48, 416 - 208, 96, 416, STATIC);
+    c18->ctype = ColliderType::PLATFORM;
+
+    //Third part
+    PhysBody* c19 = app->physics->CreateRectangle(3360 + 176, 576 - 32, 352, 64, STATIC);
+    c19->ctype = ColliderType::PLATFORM;
+    PhysBody* c20 = app->physics->CreateRectangle(3392 + 48, 352 - 176, 96, 352, STATIC);
+    c20->ctype = ColliderType::PLATFORM;
+    PhysBody* c21 = app->physics->CreateRectangle(3488 + 64, 352 - 32, 128, 64, STATIC);
+    c21->ctype = ColliderType::PLATFORM;
+    PhysBody* c22 = app->physics->CreateRectangle(3712 + 64, 576 - 80, 128, 160, STATIC);
+    c22->ctype = ColliderType::PLATFORM;
+    PhysBody* c23 = app->physics->CreateRectangle(3712 + 112, 224 - 32, 224, 64, STATIC);
+    c23->ctype = ColliderType::PLATFORM;
+    PhysBody* c24 = app->physics->CreateRectangle(3840 + 48, 576 - 176, 96, 352, STATIC);
+    c24->ctype = ColliderType::PLATFORM;
+    PhysBody* c25 = app->physics->CreateRectangle(3935 + 96, 576 - 160, 192, 320, STATIC);
+    c25->ctype = ColliderType::PLATFORM;
+
+    //Fourth part
+    PhysBody* c26 = app->physics->CreateRectangle(4256 + 32, 576 - 96, 64, 192, STATIC);
+    c26->ctype = ColliderType::PLATFORM;
+    PhysBody* c27 = app->physics->CreateRectangle(4448 + 32, 576 - 128, 64, 256, STATIC);
+    c27->ctype = ColliderType::PLATFORM;
+    PhysBody* c28 = app->physics->CreateRectangle(4640 + 16, 576 - 96, 32, 192, STATIC);
+    c28->ctype = ColliderType::PLATFORM;
+    PhysBody* c29 = app->physics->CreateRectangle(4800 + 80, 576 - 64, 160, 128, STATIC);
+    c29->ctype = ColliderType::PLATFORM;
+    PhysBody* c30 = app->physics->CreateRectangle(4960 + 144, 576 - 32, 288, 64, STATIC);
+    c30->ctype = ColliderType::PLATFORM;
+    PhysBody* c31 = app->physics->CreateRectangle(5248 + 80, 576 - 80, 160, 160, STATIC);
+    c31->ctype = ColliderType::PLATFORM;
+    PhysBody* c32 = app->physics->CreateRectangle(5504 + 48, 576 - 144, 96, 288, STATIC);
+    c32->ctype = ColliderType::PLATFORM;
+    PhysBody* c33 = app->physics->CreateRectangle(5728 + 16, 576 - 112, 32, 224, STATIC);
+    c33->ctype = ColliderType::PLATFORM;
+    PhysBody* c34 = app->physics->CreateRectangle(5984 + 208, 576 - 32, 416, 64, STATIC);
+    c34->ctype = ColliderType::PLATFORM;
+}
 
 // L06: DONE 7: Ask for the value of a custom property
 Properties::Property* Properties::GetProperty(const char* name)
