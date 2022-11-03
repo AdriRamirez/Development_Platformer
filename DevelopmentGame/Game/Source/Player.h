@@ -36,11 +36,16 @@ private:
 
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
+	SDL_Texture* texRight = NULL;
+	SDL_Texture* texLeft = NULL;
 	const char* texturePath;
+	//const char* texturerightPath;
+
 
 	// L07 DONE 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 
+	bool lookLeft;
 	bool inAir = true;
 	bool djump = true;
 
@@ -53,11 +58,20 @@ private:
 	Animation* currentAnimation = nullptr;
 
 	// A set of animations
-	Animation idleAnim;
-	Animation forwardAnim;
-	Animation backwardAnim;
-	Animation jumpAnim;
-	Animation doublejumpAnim;
+	Animation idleAnimR;
+	Animation idleAnimL;
+	Animation walkAnimR;
+	Animation walkAnimL;
+	Animation driftAnimR;
+	Animation driftAnimL;
+	Animation jumpAnimR;
+	Animation jumpAnimL;
+	Animation fallAnimR;
+	Animation fallAnimL;
+	Animation doublejumpAnimR;
+	Animation doublejumpAnimL;
+	Animation deathAnimR;
+	Animation deathAnimL;
 
 };
 

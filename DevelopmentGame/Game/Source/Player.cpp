@@ -12,6 +12,84 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+
+	//idle animation 
+	idleAnimR.PushBack({ 4, 4, 71, 65 });
+	idleAnimR.PushBack({ 76, 4, 143, 65 });
+	idleAnimR.speed = 0.025f;
+
+	idleAnimL.PushBack({ 4, 4, 71, 65 });
+	idleAnimL.PushBack({ 76, 4, 143, 65 });
+	idleAnimL.speed = 0.025f;
+
+	//walk animation 
+	walkAnimR.PushBack({ 4, 140, 83, 207 });
+	walkAnimR.PushBack({ 88, 140, 167, 207 });
+	walkAnimR.PushBack({ 172, 140, 251, 207 });
+	walkAnimR.PushBack({ 256, 140, 335, 207 });
+	walkAnimR.PushBack({ 340, 140, 419, 207 });
+	walkAnimR.PushBack({ 424, 140, 503, 207 });
+	walkAnimR.speed = 0.1f;
+
+	walkAnimL.PushBack({ 4, 140, 83, 207 });
+	walkAnimL.PushBack({ 88, 140, 167, 207 });
+	walkAnimL.PushBack({ 172, 140, 251, 207 });
+	walkAnimL.PushBack({ 256, 140, 335, 207 });
+	walkAnimL.PushBack({ 340, 140, 419, 207 });
+	walkAnimL.PushBack({ 424, 140, 503, 207 });
+	walkAnimL.speed = 0.1f;
+
+	//drift animation
+	driftAnimR.PushBack({ 4, 214, 55, 277 });
+	driftAnimR.speed = 0.1f;
+
+	driftAnimL.PushBack({ 4, 214, 55, 277 });
+	driftAnimL.speed = 0.1f;
+
+	//jump animation
+	jumpAnimR.PushBack({ 4, 282, 65, 349 });
+	jumpAnimR.speed = 0.1f;
+
+	jumpAnimL.PushBack({ 4, 282, 65, 349 });
+	jumpAnimL.speed = 0.1f;
+
+	//fall animation
+	fallAnimR.PushBack({ 4, 354, 69, 421 });
+	jumpAnimR.speed = 0.1f;
+
+	fallAnimL.PushBack({ 4, 354, 69, 421 });
+	jumpAnimL.speed = 0.1f;
+
+	//double jump animation
+	doublejumpAnimR.PushBack({ 4, 426, 99, 517 });
+	doublejumpAnimR.PushBack({ 104, 426, 199, 517 });
+	doublejumpAnimR.PushBack({ 204, 426, 299, 517 });
+	doublejumpAnimR.PushBack({ 304, 426, 399, 517 });
+	doublejumpAnimR.PushBack({ 404, 426, 499, 517 });
+	doublejumpAnimR.PushBack({ 504, 426, 599, 517 });
+	doublejumpAnimR.PushBack({ 604, 426, 699, 517 });
+	doublejumpAnimR.speed = 0.05f;
+
+	doublejumpAnimL.PushBack({ 4, 426, 99, 517 });
+	doublejumpAnimL.PushBack({ 104, 426, 199, 517 });
+	doublejumpAnimL.PushBack({ 204, 426, 299, 517 });
+	doublejumpAnimL.PushBack({ 304, 426, 399, 517 });
+	doublejumpAnimL.PushBack({ 404, 426, 499, 517 });
+	doublejumpAnimL.PushBack({ 504, 426, 599, 517 });
+	doublejumpAnimL.PushBack({ 604, 426, 699, 517 });
+	doublejumpAnimL.speed = 0.05f;
+
+	//death animation
+	deathAnimR.PushBack({ 4, 1666, 77, 1733 });
+	deathAnimR.PushBack({ 82, 1666, 155, 1733 });
+	deathAnimR.PushBack({ 160, 1666, 233, 1733 });
+	deathAnimR.speed = 0.1f;
+
+	deathAnimL.PushBack({ 4, 1666, 77, 1733 });
+	deathAnimL.PushBack({ 82, 1666, 155, 1733 });
+	deathAnimL.PushBack({ 160, 1666, 233, 1733 });
+	deathAnimL.speed = 0.1f;
+
 }
 
 Player::~Player() {
@@ -28,30 +106,21 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-
-	// idle animation (is just one frame)
-	idleAnim.PushBack({ 5, 5, 72, 68 });
-	idleAnim.speed = 0.2f;
-
-	// walk forward animation (arcade sprite sheet)
-	forwardAnim.PushBack({ 5, 209, 80, 70 });
-	forwardAnim.PushBack({ 89, 209, 80, 70 });
-	forwardAnim.PushBack({ 173, 209, 80, 70 });
-	forwardAnim.PushBack({ 257, 209, 80, 70 });
-	forwardAnim.PushBack({ 341, 209, 80, 70 });
-	forwardAnim.PushBack({ 425, 209, 80, 70 });
-	forwardAnim.speed = 0.1f;
-
+	
 	return true;
 }
 
 bool Player::Start() {
 
-	//initilize textures
-	texture = app->tex->Load(texturePath);
+    //texture = app->tex->Load(texturePath);
+	texRight = app->tex->Load("Assets/Textures/knight/right_animations.png");
+	texLeft = app->tex->Load("Assets/Textures/knight/left_animations.png"); 
+	lookLeft = false;
+
+	currentAnimation = &idleAnimR;
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
-	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 32, bodyType::DYNAMIC);
 
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this; 
@@ -79,8 +148,8 @@ bool Player::PreUpdate()
 
 bool Player::Update()
 {
-	// Reset the currentAnimation back to idle before updating the logic
-	currentAnimation = &idleAnim;
+	//Current animation update
+	currentAnimation->Update();
 
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
@@ -99,23 +168,48 @@ bool Player::Update()
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
+		lookLeft = true;
+
+		if (currentAnimation != &walkAnimL && !inAir)
+		{
+			walkAnimL.Reset();
+			currentAnimation = &walkAnimL;
+		}
 	}
+
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
-
 		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
-
+		
+		if (currentAnimation != &idleAnimL && !inAir)
+		{
+			idleAnimL.Reset();
+			currentAnimation = &idleAnimL;
+		}
 	}
 
 	//Move right
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
 	{
 		pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
-		currentAnimation = &forwardAnim;
+		lookLeft = false;
+
+		if (currentAnimation != &walkAnimR && !inAir)
+		{
+			walkAnimR.Reset();
+			currentAnimation = &walkAnimR;
+		}
+
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
+		
+		if (currentAnimation != &idleAnimR && !inAir)
+		{
+			idleAnimR.Reset();
+			currentAnimation = &idleAnimR;
+		}
 	}
 
 	//Jump
@@ -124,7 +218,7 @@ bool Player::Update()
 		if (!inAir)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
-			pbody->body->ApplyForceToCenter({ 0, -100 }, true);
+			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
 			//app->audio->PlayFx(jump_sound);
 			inAir = true;
 			djump = true;
@@ -133,11 +227,93 @@ bool Player::Update()
 		else if (djump)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
-			pbody->body->ApplyForceToCenter({ 0, -100 }, true);
+			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
 			//app->audio->PlayFx(jump_sound);
 			djump = false;
 		}
 	}
+
+	if (djump == true && inAir == true)
+	{
+		if (lookLeft)
+		{
+			if (currentAnimation != &doublejumpAnimL)
+			{
+				doublejumpAnimL.Reset();
+				currentAnimation = &doublejumpAnimL;
+			}
+		}
+		else
+		{
+			if (currentAnimation != &doublejumpAnimR)
+			{
+				doublejumpAnimR.Reset();
+				currentAnimation = &doublejumpAnimR;
+			}
+		}
+	}
+
+	if (pbody->body->GetLinearVelocity().y < 0 && inAir)
+	{
+		if (lookLeft)
+		{
+			if (currentAnimation != &jumpAnimL)
+			{
+				jumpAnimL.Reset();
+				currentAnimation = &jumpAnimL;
+			}
+		}
+		else
+		{
+			if (currentAnimation != &jumpAnimR)
+			{
+				jumpAnimR.Reset();
+				currentAnimation = &jumpAnimR;
+			}
+		}
+
+	}
+	else if (pbody->body->GetLinearVelocity().y > 0 && inAir)
+	{
+		if (lookLeft)
+		{
+			if (currentAnimation != &fallAnimL)
+			{
+				fallAnimL.Reset();
+				currentAnimation = &fallAnimL;
+			}
+		}
+		else
+		{
+			if (currentAnimation != &fallAnimR)
+			{
+				fallAnimR.Reset();
+				currentAnimation = &fallAnimR;
+			}
+		}
+	}
+	else if (pbody->body->GetLinearVelocity().x == 0 && pbody->body->GetLinearVelocity().y == 0)
+	{
+		if (lookLeft)
+		{
+			if (currentAnimation != &idleAnimL)
+			{
+				idleAnimL.Reset();
+				currentAnimation = &idleAnimL;
+			}
+		}
+		else
+		{
+			if (currentAnimation != &idleAnimR)
+			{
+				idleAnimR.Reset();
+				currentAnimation = &idleAnimR;
+			}
+		}
+	}
+
+	currentAnimation->Update();
+
 
 	if (pbody->body->GetLinearVelocity().x > -0.5f && pbody->body->GetLinearVelocity().x < 0.5f ) {
 		pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
@@ -148,10 +324,22 @@ bool Player::Update()
 
 
 	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 32;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 32;
 
-	app->render->DrawTexture(texture, position.x , position.y);
+
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+
+	//app->render->DrawTexture(texture, position.x , position.y);
+	
+		if (lookLeft)
+		{
+			app->render->DrawTexture(texLeft, position.x, position.y, &rect);
+		}
+		else
+		{
+			app->render->DrawTexture(texRight, position.x, position.y, &rect);
+		}
 
 	return true;
 }
