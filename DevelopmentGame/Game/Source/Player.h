@@ -29,11 +29,9 @@ public:
 	// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&);
 
 public:
-	float x = 8.2f, y = 22.5f;
+
 private:
 
 	//L02: DONE 1: Declare player parameters
@@ -51,8 +49,8 @@ private:
 	bool inAir = true;
 	bool djump = true;
 
-	float jumpForce = 100.0f;
-	int w = 20, h = 32;
+	float jumpForce = 20.0f;
+
 	int pickCoinFxId;
 
 	// The pointer to the current player animation
