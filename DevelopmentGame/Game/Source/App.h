@@ -20,6 +20,7 @@ class EntityManager;
 class Map;
 //L07 DONE 2: Add Physics module
 class Physics;
+class Player;
 
 class App
 {
@@ -89,7 +90,6 @@ public:
 	Scene* scene;
 	EntityManager* entityManager;
 	Map* map;
-	//L07 DONE 2: Add Physics module
 	Physics* physics;
 
 private:
