@@ -124,7 +124,7 @@ bool Player::Update()
 		if (!inAir)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
-			pbody->body->ApplyForceToCenter({ 0, -100 }, true);
+			pbody->body->ApplyForceToCenter({ 0, -jumpForce }, true);
 			//app->audio->PlayFx(jump_sound);
 			inAir = true;
 			djump = true;
@@ -133,7 +133,7 @@ bool Player::Update()
 		else if (djump)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
-			pbody->body->ApplyForceToCenter({ 0, -100 }, true);
+			pbody->body->ApplyForceToCenter({ 0, -jumpForce }, true);
 			//app->audio->PlayFx(jump_sound);
 			djump = false;
 		}
@@ -160,6 +160,32 @@ bool Player::CleanUp()
 {
 	return true;
 }
+
+bool Player::LoadState(pugi::xml_node& data)
+{
+	x = data.child("position").attribute("x").as_int();
+	y = data.child("position").attribute("y").as_int();
+
+	pbody->body->SetTransform({ x + PIXEL_TO_METERS(w), y }, pbody->body->GetAngle());
+	pbody->body->ApplyForceToCenter({ 0, 200 }, true);
+
+	currentAnimation = &idleAnim;
+	/*if (app->menu->dead)
+	{
+		app->menu->dead = false;
+	}*/
+
+	return true;
+}
+
+bool Player::SaveState(pugi::xml_node& data)
+{
+	data.child("position").attribute("x").set_value(x);
+	data.child("position").attribute("y").set_value(y);
+
+	return true;
+}
+
 
 // L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
