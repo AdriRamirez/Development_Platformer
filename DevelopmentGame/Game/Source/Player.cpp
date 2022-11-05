@@ -14,80 +14,80 @@ Player::Player() : Entity(EntityType::PLAYER)
 	name.Create("Player");
 
 	//idle animation 
-	idleAnimR.PushBack({ 4, 4, 71, 65 });
-	idleAnimR.PushBack({ 76, 4, 143, 65 });
+	idleAnimR.PushBack({ 4, 4, 68, 64 });
+	idleAnimR.PushBack({ 76, 4, 68, 64 });
 	idleAnimR.speed = 0.025f;
 
-	idleAnimL.PushBack({ 4, 4, 71, 65 });
-	idleAnimL.PushBack({ 76, 4, 143, 65 });
+	idleAnimL.PushBack({ 4, 4, 68, 64 });
+	idleAnimL.PushBack({ 76, 4, 68, 64 });
 	idleAnimL.speed = 0.025f;
 
 	//walk animation 
-	walkAnimR.PushBack({ 4, 140, 83, 207 });
-	walkAnimR.PushBack({ 88, 140, 167, 207 });
-	walkAnimR.PushBack({ 172, 140, 251, 207 });
-	walkAnimR.PushBack({ 256, 140, 335, 207 });
-	walkAnimR.PushBack({ 340, 140, 419, 207 });
-	walkAnimR.PushBack({ 424, 140, 503, 207 });
+	walkAnimR.PushBack({ 4, 140, 80, 70 });
+	walkAnimR.PushBack({ 88, 140, 80, 70 });
+	walkAnimR.PushBack({ 172, 140, 80, 70 });
+	walkAnimR.PushBack({ 256, 140, 80, 70 });
+	walkAnimR.PushBack({ 340, 140, 80, 70 });
+	walkAnimR.PushBack({ 424, 140, 80, 70 });
 	walkAnimR.speed = 0.1f;
 
-	walkAnimL.PushBack({ 4, 140, 83, 207 });
-	walkAnimL.PushBack({ 88, 140, 167, 207 });
-	walkAnimL.PushBack({ 172, 140, 251, 207 });
-	walkAnimL.PushBack({ 256, 140, 335, 207 });
-	walkAnimL.PushBack({ 340, 140, 419, 207 });
-	walkAnimL.PushBack({ 424, 140, 503, 207 });
+	walkAnimL.PushBack({ 4, 140, 80, 70 });
+	walkAnimL.PushBack({ 88, 140, 80, 70 });
+	walkAnimL.PushBack({ 172, 140, 80, 70 });
+	walkAnimL.PushBack({ 256, 140, 80, 70 });
+	walkAnimL.PushBack({ 340, 140, 80, 70 });
+	walkAnimL.PushBack({ 424, 140, 80, 70 });
 	walkAnimL.speed = 0.1f;
 
 	//drift animation
-	driftAnimR.PushBack({ 4, 214, 55, 277 });
+	driftAnimR.PushBack({ 4, 214, 52, 62 });
 	driftAnimR.speed = 0.1f;
 
-	driftAnimL.PushBack({ 4, 214, 55, 277 });
+	driftAnimL.PushBack({ 4, 214, 52, 62 });
 	driftAnimL.speed = 0.1f;
 
 	//jump animation
-	jumpAnimR.PushBack({ 4, 282, 65, 349 });
+	jumpAnimR.PushBack({ 4, 282, 62, 68 });
 	jumpAnimR.speed = 0.1f;
 
-	jumpAnimL.PushBack({ 4, 282, 65, 349 });
+	jumpAnimL.PushBack({ 4, 282, 62, 68 });
 	jumpAnimL.speed = 0.1f;
 
 	//fall animation
-	fallAnimR.PushBack({ 4, 354, 69, 421 });
+	fallAnimR.PushBack({ 4, 354, 67, 68 });
 	jumpAnimR.speed = 0.1f;
 
-	fallAnimL.PushBack({ 4, 354, 69, 421 });
+	fallAnimL.PushBack({ 4, 354, 67, 68 });
 	jumpAnimL.speed = 0.1f;
 
 	//double jump animation
-	doublejumpAnimR.PushBack({ 4, 426, 99, 517 });
-	doublejumpAnimR.PushBack({ 104, 426, 199, 517 });
-	doublejumpAnimR.PushBack({ 204, 426, 299, 517 });
-	doublejumpAnimR.PushBack({ 304, 426, 399, 517 });
-	doublejumpAnimR.PushBack({ 404, 426, 499, 517 });
-	doublejumpAnimR.PushBack({ 504, 426, 599, 517 });
-	doublejumpAnimR.PushBack({ 604, 426, 699, 517 });
+	doublejumpAnimR.PushBack({ 4, 426, 96, 92 });
+	doublejumpAnimR.PushBack({ 104, 426, 96, 92 });
+	doublejumpAnimR.PushBack({ 204, 426, 96, 92 });
+	doublejumpAnimR.PushBack({ 304, 426, 96, 92 });
+	doublejumpAnimR.PushBack({ 404, 426, 96, 92 });
+	doublejumpAnimR.PushBack({ 504, 426, 96, 92 });
+	doublejumpAnimR.PushBack({ 604, 426, 96, 92 });
 	doublejumpAnimR.speed = 0.05f;
 
-	doublejumpAnimL.PushBack({ 4, 426, 99, 517 });
-	doublejumpAnimL.PushBack({ 104, 426, 199, 517 });
-	doublejumpAnimL.PushBack({ 204, 426, 299, 517 });
-	doublejumpAnimL.PushBack({ 304, 426, 399, 517 });
-	doublejumpAnimL.PushBack({ 404, 426, 499, 517 });
-	doublejumpAnimL.PushBack({ 504, 426, 599, 517 });
-	doublejumpAnimL.PushBack({ 604, 426, 699, 517 });
+	doublejumpAnimL.PushBack({ 4, 426, 96, 92 });
+	doublejumpAnimL.PushBack({ 104, 426, 96, 92 });
+	doublejumpAnimL.PushBack({ 204, 426, 96, 92 });
+	doublejumpAnimL.PushBack({ 304, 426, 96, 92 });
+	doublejumpAnimL.PushBack({ 404, 426, 96, 92 });
+	doublejumpAnimL.PushBack({ 504, 426, 96, 92 });
+	doublejumpAnimL.PushBack({ 604, 426, 96, 92 });
 	doublejumpAnimL.speed = 0.05f;
 
 	//death animation
-	deathAnimR.PushBack({ 4, 1666, 77, 1733 });
-	deathAnimR.PushBack({ 82, 1666, 155, 1733 });
-	deathAnimR.PushBack({ 160, 1666, 233, 1733 });
+	deathAnimR.PushBack({ 4, 1666, 74, 78 });
+	deathAnimR.PushBack({ 82, 1666, 74, 78 });
+	deathAnimR.PushBack({ 160, 1666, 74, 78 });
 	deathAnimR.speed = 0.1f;
 
-	deathAnimL.PushBack({ 4, 1666, 77, 1733 });
-	deathAnimL.PushBack({ 82, 1666, 155, 1733 });
-	deathAnimL.PushBack({ 160, 1666, 233, 1733 });
+	deathAnimL.PushBack({ 4, 1666, 74, 78 });
+	deathAnimL.PushBack({ 82, 1666, 74, 78 });
+	deathAnimL.PushBack({ 160, 1666, 74, 78 });
 	deathAnimL.speed = 0.1f;
 
 }
