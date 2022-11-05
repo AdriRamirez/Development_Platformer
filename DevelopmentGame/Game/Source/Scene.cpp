@@ -38,15 +38,16 @@ bool Scene::Awake(pugi::xml_node& config)
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");
-
+	
 	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
-	//img = app->tex->Load("Assets/Textures/test.png");
+	//title_screen = app->tex->Load("Assets/Textures/levels/title_screen.png");
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	
 	
 	// L03: DONE: Load map
 	app->map->Load();
@@ -58,15 +59,19 @@ bool Scene::Start()
 		app->map->mapData.tileWidth,
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
-
 	app->win->SetTitle(title.GetString());
-
+	
 	return true;
 }
 
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	if (title_screen != NULL && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		NextLevel(1);
+
+	}
 	return true;
 }
 
@@ -118,6 +123,15 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+	/*
+	if (title_screen != NULL)
+	{
+		app->render->DrawTexture(title_screen, 0, 0);
+	}
+	else
+	{
+		app->map->Draw();
+	}*/
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -129,6 +143,69 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	return true;
+}
+
+bool Scene::NextLevel(int level) {
+
+	if (title_screen != NULL) {
+		FadeFromBlack(level);
+	}
+	else {
+		FadeToBlack(level);
+	}
+
+	title_screen = NULL;
+
+	return true;
+}
+
+bool Scene::ReturnStartScreen()
+{
+	title_screen = app->tex->Load("Assets/textures/Start_screen.png");
+
+	return true;
+}
+
+bool Scene::FadeToBlack(int level)
+{
+
+	if (level != -1) destination_level = level;
+
+	return true;
+}
+
+bool Scene::FadeFromBlack(int level)
+{
+
+	if (level != -1)
+	{
+
+		switch (level)
+		{
+		case 0:
+			ReturnStartScreen();
+			break;
+		case 1:
+
+			app->SaveGameRequest();
+			app->map->Load();
+
+			SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+				app->map->mapData.width,
+				app->map->mapData.height,
+				app->map->mapData.tileWidth,
+				app->map->mapData.tileHeight,
+				app->map->mapData.tilesets.Count());
+
+			app->win->SetTitle(title.GetString());
+
+			current_lvl = 1;
+			break;
+
+		}
+	}
 
 	return true;
 }

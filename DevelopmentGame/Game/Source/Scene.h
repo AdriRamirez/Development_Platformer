@@ -34,14 +34,21 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool NextLevel(int level);
+	bool FadeFromBlack(int level);
+	bool FadeToBlack(int level);
+	bool ReturnStartScreen();
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
 
-private:
-	SDL_Texture* img;
+	int current_lvl = 0;
 
+private:
+	SDL_Texture* title_screen;
+	int destination_level = -1;
 };
 
 #endif // __SCENE_H__
