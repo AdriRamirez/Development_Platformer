@@ -68,7 +68,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 	doublejumpAnimR.PushBack({ 404, 426, 96, 92 });
 	doublejumpAnimR.PushBack({ 504, 426, 96, 92 });
 	doublejumpAnimR.PushBack({ 604, 426, 96, 92 });
-	doublejumpAnimR.speed = 0.05f;
+	doublejumpAnimR.speed = 0.07f;
+	//doublejumpAnimR.loop = false;
 
 	doublejumpAnimL.PushBack({ 4, 426, 96, 92 });
 	doublejumpAnimL.PushBack({ 104, 426, 96, 92 });
@@ -77,7 +78,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 	doublejumpAnimL.PushBack({ 404, 426, 96, 92 });
 	doublejumpAnimL.PushBack({ 504, 426, 96, 92 });
 	doublejumpAnimL.PushBack({ 604, 426, 96, 92 });
-	doublejumpAnimL.speed = 0.05f;
+	doublejumpAnimL.speed = 0.07f;
+	//doublejumpAnimL.loop = false;
 
 	//death animation
 	deathAnimR.PushBack({ 4, 1666, 74, 78 });
@@ -222,10 +224,12 @@ bool Player::Update()
 			//app->audio->PlayFx(jump_sound);
 			inAir = true;
 			djump = true;
+			rollin = false;
 		}
 		//Double jump
 		else if (djump)
 		{
+			rollin = true;
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
 			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
 			//app->audio->PlayFx(jump_sound);
@@ -233,42 +237,46 @@ bool Player::Update()
 		}
 	}
 
-	if (djump == true && inAir == true)
-	{
-		if (lookLeft)
-		{
-			if (currentAnimation != &doublejumpAnimL)
-			{
-				doublejumpAnimL.Reset();
-				currentAnimation = &doublejumpAnimL;
-			}
-		}
-		else
-		{
-			if (currentAnimation != &doublejumpAnimR)
-			{
-				doublejumpAnimR.Reset();
-				currentAnimation = &doublejumpAnimR;
-			}
-		}
-	}
 
 	if (pbody->body->GetLinearVelocity().y < 0 && inAir)
 	{
-		if (lookLeft)
+		if (rollin == false)
 		{
-			if (currentAnimation != &jumpAnimL)
+			if (lookLeft)
 			{
-				jumpAnimL.Reset();
-				currentAnimation = &jumpAnimL;
+				if (currentAnimation != &jumpAnimL)
+				{
+					jumpAnimL.Reset();
+					currentAnimation = &jumpAnimL;
+				}
+			}
+
+			else
+			{
+				if (currentAnimation != &jumpAnimR)
+				{
+					jumpAnimR.Reset();
+					currentAnimation = &jumpAnimR;
+				}
 			}
 		}
 		else
 		{
-			if (currentAnimation != &jumpAnimR)
+			if (lookLeft)
 			{
-				jumpAnimR.Reset();
-				currentAnimation = &jumpAnimR;
+				if (currentAnimation != &doublejumpAnimL)
+				{
+					doublejumpAnimL.Reset();
+					currentAnimation = &doublejumpAnimL;
+				}
+			}
+			else
+			{
+				if (currentAnimation != &doublejumpAnimR)
+				{
+					doublejumpAnimR.Reset();
+					currentAnimation = &doublejumpAnimR;
+				}
 			}
 		}
 

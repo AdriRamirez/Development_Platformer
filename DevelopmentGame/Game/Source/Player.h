@@ -48,6 +48,7 @@ private:
 	bool lookLeft;
 	bool inAir = true;
 	bool djump = true;
+	bool rollin = false;
 
 	float jumpForce = 20.0f;
 
