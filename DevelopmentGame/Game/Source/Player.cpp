@@ -364,6 +364,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision PLATFORM");
 			inAir = false;
 			break;
+		case ColliderType::DEATH:
+			LOG("Collision DEATH");
+			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 			break;

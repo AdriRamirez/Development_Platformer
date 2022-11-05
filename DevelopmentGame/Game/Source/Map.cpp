@@ -350,7 +350,12 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 void Map::CollidersLevel1() {
     // Create colliders
-//First part of the map
+
+    //Death Collider
+    PhysBody* c0 = app->physics->CreateRectangle(3200, 672, 6400, 32, STATIC);
+    c0->ctype = ColliderType::DEATH;
+
+    //First part of the map
     PhysBody* c1 = app->physics->CreateRectangle(415, 544, 830, 64, STATIC);
     c1->ctype = ColliderType::PLATFORM;
     PhysBody* c2 = app->physics->CreateRectangle(832 + 48, 544 - 32, 96, 128, STATIC);
