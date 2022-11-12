@@ -55,10 +55,10 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//fall animation
 	fallAnimR.PushBack({ 4, 354, 67, 68 });
-	jumpAnimR.speed = 0.1f;
+	fallAnimR.speed = 0.1f;
 
 	fallAnimL.PushBack({ 4, 354, 67, 68 });
-	jumpAnimL.speed = 0.1f;
+	fallAnimL.speed = 0.1f;
 
 	//double jump animation
 	doublejumpAnimR.PushBack({ 4, 426, 96, 92 });
@@ -68,7 +68,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	doublejumpAnimR.PushBack({ 404, 426, 96, 92 });
 	doublejumpAnimR.PushBack({ 504, 426, 96, 92 });
 	doublejumpAnimR.PushBack({ 604, 426, 96, 92 });
-	doublejumpAnimR.speed = 0.07f;
+	doublejumpAnimR.speed = 0.1f;
 	//doublejumpAnimR.loop = false;
 
 	doublejumpAnimL.PushBack({ 4, 426, 96, 92 });
@@ -212,8 +212,8 @@ bool Player::Update()
 			walkAnimR.Reset();
 			currentAnimation = &walkAnimR;
 		}
-
 	}
+
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
@@ -248,6 +248,26 @@ bool Player::Update()
 		}
 	}
 
+	//Idle animation if player is not in the air and walking
+	if (currentAnimation != &walkAnimL && currentAnimation != &walkAnimR && !inAir)
+	{
+		if (lookLeft)
+		{
+			if (currentAnimation != &idleAnimL)
+			{
+				idleAnimL.Reset();
+				currentAnimation = &idleAnimL;
+			}
+		}
+		else
+		{
+			if (currentAnimation != &idleAnimR)
+			{
+				idleAnimR.Reset();
+				currentAnimation = &idleAnimR;
+			}
+		}
+	}
 
 	if (pbody->body->GetLinearVelocity().y < 0 && inAir)
 	{
@@ -292,7 +312,7 @@ bool Player::Update()
 		}
 
 	}
-	else if (pbody->body->GetLinearVelocity().y > 0 && inAir)
+	else if (pbody->body->GetLinearVelocity().y > 3 && inAir)
 	{
 		if (lookLeft)
 		{
