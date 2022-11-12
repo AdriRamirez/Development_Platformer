@@ -103,6 +103,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
 	if (a >= 255)
 	{
 		go_black = false;
@@ -128,24 +129,29 @@ bool Scene::Update(float dt)
 		app->render->camera.y -= 10;
 
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += 10;
+		app->render->camera.x += 20;
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= 10;
+		app->render->camera.x -= 20;
 
 	//Camera movement with the player
 	uint x, y;
 	app->win->GetWindowSize(x, y);
-	app->render->camera.x = -app->scene->player->position.x + (x / 2);
+	//app->render->camera.x = -app->scene->player->position.x + (x / 2);
+	
+
 
 	
 
 	//Camera off map adjustment
-	if (app->render->camera.x > 0)
+	/*if (app->render->camera.x > 0) {
 		app->render->camera.x = 0;
+	}
 
-	if (app->render->camera.x > 6001)
-		app->render->camera.x = 6001;
+	 if (app->render->camera.x < -5600) {
+		app->render->camera.x = -5600;
+	}*/
+		
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 

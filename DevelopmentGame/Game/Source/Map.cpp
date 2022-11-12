@@ -352,10 +352,12 @@ void Map::CollidersLevel1() {
     // Create colliders
 
     //Death Collider
-    PhysBody* c0 = app->physics->CreateRectangle(3200, 672, 6400, 32, STATIC);
-    c0->ctype = ColliderType::DEATH;
+    PhysBody* cD = app->physics->CreateRectangle(3200, 672, 6400, 32, STATIC);
+    cD->ctype = ColliderType::DEATH;
 
     //First part of the map
+    PhysBody* c0 = app->physics->CreateRectangle(0-16, 576-288, 32, 576, STATIC);
+    c0->ctype = ColliderType::PLATFORM;
     PhysBody* c1 = app->physics->CreateRectangle(415, 544, 830, 64, STATIC);
     c1->ctype = ColliderType::PLATFORM;
     PhysBody* c2 = app->physics->CreateRectangle(832 + 48, 544 - 32, 96, 128, STATIC);
@@ -430,6 +432,9 @@ void Map::CollidersLevel1() {
     c33->ctype = ColliderType::PLATFORM;
     PhysBody* c34 = app->physics->CreateRectangle(5984 + 208, 576 - 32, 416, 64, STATIC);
     c34->ctype = ColliderType::PLATFORM;
+    PhysBody* c35 = app->physics->CreateRectangle(6400 + 16, 576 - 288, 32, 576, STATIC);
+    c35->ctype = ColliderType::PLATFORM;
+
 }
 
 // L06: DONE 7: Ask for the value of a custom property
