@@ -46,8 +46,7 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	title_screen = app->tex->Load("Assets/Textures/levels/title_screen.png");
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-	
+
 	a = 0;
 	r = { 0, 0, 2560, 1440 };
 	// L03: DONE: Load map
@@ -231,6 +230,7 @@ bool Scene::FadeFromBlack(int level)
 
 			app->SaveGameRequest();
 			app->map->Load();
+			app->audio->PlayMusic("Assets/Audio/Music/strike_the_earth.ogg");
 			
 			SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				app->map->mapData.width,

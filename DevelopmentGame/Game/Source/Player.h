@@ -38,9 +38,19 @@ private:
 
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
-	SDL_Texture* texRight = NULL;
-	SDL_Texture* texLeft = NULL;
-	const char* texturePath;
+	SDL_Texture* textureRight;
+	SDL_Texture* textureLeft;
+
+	int jumpSound;
+	int landSound;
+
+	const char* texRight = NULL;
+	const char* texLeft = NULL;
+
+	const char* jumpFx = NULL;
+	const char* landFx = NULL;
+
+	//const char* texturePath;
 	//const char* texturerightPath;
 
 

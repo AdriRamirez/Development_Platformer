@@ -107,17 +107,28 @@ bool Player::Awake() {
 	//L02: DONE 5: Get Player parameters from XML
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	
+	//texturePath = parameters.attribute("texturepath").as_string();
+
+	//Animation textures from XML
+	texRight = parameters.attribute("texRight").as_string();
+	texLeft = parameters.attribute("texLeft").as_string();
+
+	//Player Fx from XML
+	jumpFx = parameters.attribute("jumpFx").as_string();
+	landFx = parameters.attribute("landFx").as_string();
+
 	return true;
 }
 
 bool Player::Start() {
 
-    //texture = app->tex->Load(texturePath);
-	texRight = app->tex->Load("Assets/Textures/knight/right_animations.png");
-	texLeft = app->tex->Load("Assets/Textures/knight/left_animations.png"); 
+	//texture = app->tex->Load(texturePath);
+	textureRight = app->tex->Load(texRight);
+	textureLeft = app->tex->Load(texLeft);
 	lookLeft = false;
+
+	jumpSound = app->audio->LoadFx(jumpFx);
+	landSound = app->audio->LoadFx(landFx);
 
 	currentAnimation = &idleAnimR;
 
@@ -221,7 +232,7 @@ bool Player::Update()
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
 			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
-			//app->audio->PlayFx(jump_sound);
+			app->audio->PlayFx(jumpSound);
 			inAir = true;
 			djump = true;
 			rollin = false;
@@ -232,7 +243,7 @@ bool Player::Update()
 			rollin = true;
 			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
 			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
-			//app->audio->PlayFx(jump_sound);
+			app->audio->PlayFx(jumpSound);
 			djump = false;
 		}
 	}
@@ -340,11 +351,11 @@ bool Player::Update()
 
 	if (lookLeft)
 	{
-		app->render->DrawTexture(texLeft, position.x, position.y, &rect);
+		app->render->DrawTexture(textureLeft, position.x, position.y, &rect);
 	}
 	else
 	{
-		app->render->DrawTexture(texRight, position.x, position.y, &rect);
+		app->render->DrawTexture(textureRight, position.x, position.y, &rect);
 	}
 
 	return true;
@@ -375,6 +386,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
+			app->audio->PlayFx(landSound);
 			inAir = false;
 			break;
 		case ColliderType::DEATH:
