@@ -33,7 +33,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
+	void SetA_Black()
+	{
+		a = 255;
+	}
 	bool NextLevel(int level);
 	bool FadeFromBlack(int level);
 	bool FadeToBlack(int level);
@@ -43,12 +46,19 @@ public:
 
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
-
+	SDL_Texture* title_screen;
 	int current_lvl = 0;
 
 private:
-	SDL_Texture* title_screen;
+	SDL_Rect r;
+	Uint8 a;
+
+	bool go_black = false;
+	bool return_black = false;
+	int fade_speed = 2;
+
 	int destination_level = -1;
+	pugi::xml_node node;
 };
 
 #endif // __SCENE_H__

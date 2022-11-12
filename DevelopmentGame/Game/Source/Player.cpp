@@ -151,7 +151,7 @@ bool Player::PreUpdate()
 bool Player::Update()
 {
 	//Current animation update
-	currentAnimation->Update();
+	//currentAnimation->Update();
 
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
@@ -338,16 +338,21 @@ bool Player::Update()
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 
-	//app->render->DrawTexture(texture, position.x , position.y);
-	
-		if (lookLeft)
-		{
-			app->render->DrawTexture(texLeft, position.x, position.y, &rect);
-		}
-		else
-		{
-			app->render->DrawTexture(texRight, position.x, position.y, &rect);
-		}
+	if (lookLeft)
+	{
+		app->render->DrawTexture(texLeft, position.x, position.y, &rect);
+	}
+	else
+	{
+		app->render->DrawTexture(texRight, position.x, position.y, &rect);
+	}
+
+	return true;
+}
+
+bool Player::PostUpdate() {
+
+
 
 	return true;
 }

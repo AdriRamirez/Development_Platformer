@@ -165,7 +165,7 @@ bool Map::CleanUp()
 bool Map::Load()
 {
     bool ret = true;
-
+    
     pugi::xml_document mapFileXML;
     pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
 
