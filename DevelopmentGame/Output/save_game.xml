@@ -3,7 +3,7 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<:anonymous />
 	<:anonymous />
 	<scene />
 	<entitymanager />

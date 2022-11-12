@@ -46,6 +46,7 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	title_screen = app->tex->Load("Assets/Textures/levels/title_screen.png");
+	app->audio->PlayMusic("Assets/Audio/Music/title_theme.ogg");
 
 	a = 0;
 	r = { 0, 0, 2560, 1440 };
@@ -228,6 +229,7 @@ bool Scene::FadeFromBlack(int level)
 			break;
 		case 1:
 
+			app->audio->name = false;
 			app->SaveGameRequest();
 			app->map->Load();
 			app->audio->PlayMusic("Assets/Audio/Music/strike_the_earth.ogg");
