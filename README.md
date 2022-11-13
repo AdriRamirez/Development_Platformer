@@ -9,6 +9,7 @@ One level
 Parallax         
 Basic Movement         
 Double Jump         
+Pause & Death Menu         
 Debugging functions         
 
 ## Controls
