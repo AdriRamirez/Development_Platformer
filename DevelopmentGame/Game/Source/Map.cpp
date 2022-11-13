@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Render.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -60,28 +61,53 @@ void Map::Draw()
         //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
         if (mapLayerItem->data->properties.GetProperty("draw") != NULL && mapLayerItem->data->properties.GetProperty("draw")->value) {
 
-            for (int x = 0; x < mapLayerItem->data->width; x++)
-            {
-                for (int y = 0; y < mapLayerItem->data->height; y++)
+            if (mapLayerItem->data->properties.GetProperty("parallax") != NULL && mapLayerItem->data->properties.GetProperty("parallax")->value) {
+
+                for (int x = 0; x < mapLayerItem->data->width; x++)
                 {
-                    // L05: DONE 9: Complete the draw function
-                    int gid = mapLayerItem->data->Get(x, y);
+                    for (int y = 0; y < mapLayerItem->data->height; y++)
+                    {
+                        // L05: DONE 9: Complete the draw function
+                        int gid = mapLayerItem->data->Get(x, y);
 
-                    //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                    TileSet* tileset = GetTilesetFromTileId(gid);
+                        //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                        TileSet* tileset = GetTilesetFromTileId(gid);
 
-                    SDL_Rect r = tileset->GetTileRect(gid);
-                    iPoint pos = MapToWorld(x, y);
+                        SDL_Rect r = tileset->GetTileRect(gid);
+                        iPoint pos = MapToWorld(x, y);
 
-                    app->render->DrawTexture(tileset->texture,
-                        pos.x,
-                        pos.y,
-                        &r);
+
+                            app->render->DrawTexture(tileset->texture,
+                                pos.x = pos.x - app->render->camera.x / 1.11,
+                                pos.y,
+                                &r);
+                    }
+                }
+            }
+            else
+            {
+                for (int x = 0; x < mapLayerItem->data->width; x++)
+                {
+                    for (int y = 0; y < mapLayerItem->data->height; y++)
+                    {
+                        // L05: DONE 9: Complete the draw function
+                        int gid = mapLayerItem->data->Get(x, y);
+
+                        //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                        TileSet* tileset = GetTilesetFromTileId(gid);
+
+                        SDL_Rect r = tileset->GetTileRect(gid);
+                        iPoint pos = MapToWorld(x, y);
+
+                        app->render->DrawTexture(tileset->texture,
+                            pos.x,
+                            pos.y,
+                            &r);
+                    }
                 }
             }
         }
         mapLayerItem = mapLayerItem->next;
-
     }
 }
 
