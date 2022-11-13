@@ -17,7 +17,9 @@ Debugging functions
 A - Move Left         
 D - Move Right         
 W - Move Up (in god mode)         
-S - Move Down (in god mode)         
+S - Move Down (in god mode)    
+Up arrow - Move camera up (in god mode)         
+Down arrow - Move camera down (in god mode)         
 
 Debugging options:         
 F1 - Show/Hide colliders         
