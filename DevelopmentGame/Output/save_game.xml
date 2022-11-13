@@ -6,12 +6,12 @@
 	<:anonymous />
 	<:anonymous />
 	<scene>
-		<player x="34" y="484" />
+		<player x="1341" y="197" />
 	</scene>
 	<entitymanager />
 	<map />
 	<menu />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera />
 	</renderer>
 </save_state>

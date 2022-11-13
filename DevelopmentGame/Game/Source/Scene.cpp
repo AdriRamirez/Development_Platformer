@@ -122,8 +122,16 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN){
 		godMode = !godMode;
+		if (!godMode) {
+			b2Vec2 pos;
+			pos.x = PIXEL_TO_METERS(player->position.x);
+			pos.y = PIXEL_TO_METERS(player->position.y);
+			player->pbody->body->SetTransform(pos, player->pbody->body->GetAngle());
+		}
+	}
+		
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += 10;
@@ -179,10 +187,12 @@ bool Scene::PostUpdate()
 
 bool Scene::LoadState(pugi::xml_node& data)
 {
-	player->position.x = data.child("position").attribute("x").as_int();
-	player->position.y = data.child("position").attribute("y").as_int();
-
-	player->pbody->body->SetTransform({PIXEL_TO_METERS(x), PIXEL_TO_METERS(y) }, player->pbody->body->GetAngle());
+	player->position.x = data.child("player").attribute("x").as_int();
+	player->position.y = data.child("player").attribute("y").as_int();
+	b2Vec2 pos;
+	pos.x = PIXEL_TO_METERS(player->position.x);
+	pos.y = PIXEL_TO_METERS(player->position.y);
+	player->pbody->body->SetTransform(pos, player->pbody->body->GetAngle());
 	//player->pbody->body->ApplyForceToCenter({ 0, 200 }, true);
 
 	player->currentAnimation = &player->idleAnimR;
