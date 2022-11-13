@@ -45,6 +45,8 @@ public:
 	bool FadeToBlack(int level);
 	bool ReturnStartScreen();
 
+	bool godMode=false;
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 

@@ -123,6 +123,9 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		godMode = !godMode;
+
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += 10;
 
@@ -134,7 +137,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 20;
-
+	
 	//Camera movement with the player
 	uint x, y;
 	app->win->GetWindowSize(x, y);

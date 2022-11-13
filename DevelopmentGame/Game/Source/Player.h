@@ -36,7 +36,6 @@ public:
 private:
 
 	//L02: DONE 1: Declare player parameters
-	SDL_Texture* texture;
 	SDL_Texture* textureRight;
 	SDL_Texture* textureLeft;
 

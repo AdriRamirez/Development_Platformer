@@ -24,7 +24,7 @@ Physics::Physics() : Module()
 {
 	// Initialise all the internal class variables, at least to NULL pointer
 	world = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor
@@ -231,7 +231,7 @@ bool Physics::PostUpdate()
 {
 	bool ret = true;
 
-	// Activate or deactivate debug mode
+	// Show or hide colliders
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 	

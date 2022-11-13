@@ -3,9 +3,10 @@
 	<input />
 	<window />
 	<textures />
-
+	<:anonymous />
+	<:anonymous />
 	<scene>
-		<player x="90" y="447" />
+		<player x="34" y="484" />
 	</scene>
 	<entitymanager />
 	<map />

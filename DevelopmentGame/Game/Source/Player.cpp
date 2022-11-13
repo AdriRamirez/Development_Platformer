@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Menu.h"
+#include "EntityManager.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -162,90 +163,124 @@ bool Player::PreUpdate()
 
 bool Player::Update()
 {
-	//Current animation update
-	//currentAnimation->Update();
 
-	// L07 DONE 5: Add physics to the player - updated player position using physics
+	// Add physics to the player - updated player position using physics
 
-	float speed = 3.5f; 
-	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
 
-	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
-	}
-	
+	float speed = 3.5f;
+
+
 	//Move left
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
-		lookLeft = true;
-
-		if (currentAnimation != &walkAnimL && !inAir)
+	if (!app->menu->GetGameState()) {
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			walkAnimL.Reset();
-			currentAnimation = &walkAnimL;
+			if (!app->scene->godMode)
+				pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
+			else if (app->scene->godMode && !app->menu->GetGameState())
+				position.x -= 10;
+
+			lookLeft = true;
+
+			if (currentAnimation != &walkAnimL && !inAir)
+			{
+				walkAnimL.Reset();
+				currentAnimation = &walkAnimL;
+			}
 		}
-	}
 
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-	{
-		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
-		
-		if (currentAnimation != &idleAnimL && !inAir)
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 		{
-			idleAnimL.Reset();
-			currentAnimation = &idleAnimL;
+
+			pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
+
+			if (currentAnimation != &idleAnimL && !inAir)
+			{
+				idleAnimL.Reset();
+				currentAnimation = &idleAnimL;
+			}
 		}
 	}
 
 	//Move right
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
-	{
-		pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
-		lookLeft = false;
-
-		if (currentAnimation != &walkAnimR && !inAir)
+	if (!app->menu->GetGameState()) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			walkAnimR.Reset();
-			currentAnimation = &walkAnimR;
+			if (!app->scene->godMode)
+				pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
+			else if (app->scene->godMode && !app->menu->GetGameState())
+				position.x += 10;
+
+			lookLeft = false;
+
+			if (currentAnimation != &walkAnimR && !inAir)
+			{
+				walkAnimR.Reset();
+				currentAnimation = &walkAnimR;
+			}
+		}
+
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+		{
+			pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
+
+			if (currentAnimation != &idleAnimR && !inAir)
+			{
+				idleAnimR.Reset();
+				currentAnimation = &idleAnimR;
+			}
 		}
 	}
 
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
-	{
-		pbody->body->SetLinearVelocity(b2Vec2( 0, pbody->body->GetLinearVelocity().y ));
-		
-		if (currentAnimation != &idleAnimR && !inAir)
-		{
-			idleAnimR.Reset();
-			currentAnimation = &idleAnimR;
+	//God Mode vertical movement
+	if (app->scene->godMode && !app->menu->GetGameState()) {
+		//Move Up
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			position.y -= 10;
+
+			lookLeft = false;
+
+			if (currentAnimation != &walkAnimR && !inAir)
+			{
+				walkAnimR.Reset();
+				currentAnimation = &walkAnimR;
+			}
+		}
+		//Move Down
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			position.y += 10;
+
+			lookLeft = false;
+
+			if (currentAnimation != &walkAnimR && !inAir)
+			{
+				walkAnimR.Reset();
+				currentAnimation = &walkAnimR;
+			}
 		}
 	}
 
 	//Jump
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (!inAir)
-		{
-			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
-			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
-			app->audio->PlayFx(jumpSound);
-			inAir = true;
-			djump = true;
-			rollin = false;
-		}
-		//Double jump
-		else if (djump)
-		{
-			rollin = true;
-			pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x , 0 ));
-			pbody->body->ApplyForceToCenter({ 0, -400 }, true);
-			app->audio->PlayFx(jumpSound);
-			djump = false;
+		if (!app->scene->godMode && !app->menu->GetGameState()) {
+			if (!inAir)
+			{
+				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, 0));
+				pbody->body->ApplyForceToCenter({ 0, -400 }, true);
+				app->audio->PlayFx(jumpSound);
+				inAir = true;
+				djump = true;
+				rollin = false;
+			}
+			//Double jump
+			else if (djump)
+			{
+				rollin = true;
+				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, 0));
+				pbody->body->ApplyForceToCenter({ 0, -400 }, true);
+				app->audio->PlayFx(jumpSound);
+				djump = false;
+			}
 		}
 	}
 
@@ -355,17 +390,19 @@ bool Player::Update()
 	currentAnimation->Update();
 
 
-	if (pbody->body->GetLinearVelocity().x > -0.5f && pbody->body->GetLinearVelocity().x < 0.5f ) {
+	if (pbody->body->GetLinearVelocity().x > -0.5f && pbody->body->GetLinearVelocity().x < 0.5f) {
 		pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
 	}
 
 	//Set the velocity of the pbody of the player
 	//pbody->body->SetLinearVelocity(vel);
 
+	if (!app->scene->godMode) {
+		//Update player position in pixels
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 32;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 32;
 
-	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 32;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 32;
+	}
 
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -379,7 +416,9 @@ bool Player::Update()
 		app->render->DrawTexture(textureRight, position.x, position.y, &rect);
 	}
 
+
 	return true;
+	
 }
 
 bool Player::PostUpdate() {
@@ -405,7 +444,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ITEM:
 			LOG("Collision ITEM");
 			app->audio->PlayFx(pickCoinFxId);
-			
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
