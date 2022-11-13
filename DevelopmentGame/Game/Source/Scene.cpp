@@ -8,6 +8,7 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Menu.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -137,20 +138,15 @@ bool Scene::Update(float dt)
 	//Camera movement with the player
 	uint x, y;
 	app->win->GetWindowSize(x, y);
-	//app->render->camera.x = -app->scene->player->position.x + (x / 2);
-	
-
-
-	
+	app->render->camera.x = -app->scene->player->position.x + (x / 2);
 
 	//Camera off map adjustment
-	/*if (app->render->camera.x > 0) {
+	if (app->render->camera.x > 0) {
 		app->render->camera.x = 0;
 	}
-
-	 if (app->render->camera.x < -5600) {
+	if (app->render->camera.x < -5600) {
 		app->render->camera.x = -5600;
-	}*/
+	}
 		
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
@@ -172,8 +168,8 @@ bool Scene::PostUpdate()
 	}
 	
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
 
 	int c_x = -app->render->camera.x;
 	r.x = c_x;
@@ -182,6 +178,35 @@ bool Scene::PostUpdate()
 
 
 	return ret;
+}
+
+bool Scene::LoadState(pugi::xml_node& data)
+{
+	player->position.x = data.child("position").attribute("x").as_int();
+	player->position.y = data.child("position").attribute("y").as_int();
+
+	player->pbody->body->SetTransform({PIXEL_TO_METERS(x), PIXEL_TO_METERS(y) }, player->pbody->body->GetAngle());
+	//player->pbody->body->ApplyForceToCenter({ 0, 200 }, true);
+
+	player->currentAnimation = &player->idleAnimR;
+	if (app->menu->dead)
+	{
+		app->menu->dead = false;
+		player->currentAnimation = &player->idleAnimR;
+	}
+
+	return true;
+}
+
+bool Scene::SaveState(pugi::xml_node& data)
+{
+	pugi::xml_node pos = data.append_child("player");
+
+	pos.append_attribute("x") = player->position.x;
+	pos.append_attribute("y") = player->position.y;
+
+
+	return true;
 }
 
 // Called before quitting

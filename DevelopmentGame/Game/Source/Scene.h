@@ -31,6 +31,9 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
+
 	// Called before quitting
 	bool CleanUp();
 	void SetA_Black()
@@ -48,7 +51,7 @@ public:
 	Player* player;
 	SDL_Texture* title_screen;
 	int current_lvl = 0;
-
+	float x = 50, y = 500;
 private:
 	SDL_Rect r;
 	Uint8 a;

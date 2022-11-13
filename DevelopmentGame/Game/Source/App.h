@@ -21,6 +21,7 @@ class Map;
 //L07 DONE 2: Add Physics module
 class Physics;
 class Player;
+class Menu;
 
 class App
 {
@@ -91,6 +92,7 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	Menu* menu;
 
 private:
 

@@ -31,9 +31,8 @@ public:
 	// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-
-public:
-
+	float x, y;
+	int w;
 private:
 
 	//L02: DONE 1: Declare player parameters
@@ -55,7 +54,7 @@ private:
 
 
 	// L07 DONE 5: Add physics to the player - declare a Physics body
-	PhysBody* pbody;
+
 
 	bool lookLeft;
 	bool inAir = true;
@@ -66,6 +65,8 @@ private:
 
 	int pickCoinFxId;
 
+public:
+	PhysBody* pbody;
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;

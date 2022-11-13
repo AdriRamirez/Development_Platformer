@@ -3,11 +3,13 @@
 	<input />
 	<window />
 	<textures />
-	<:anonymous />
-	<:anonymous />
-	<scene />
+
+	<scene>
+		<player x="90" y="447" />
+	</scene>
 	<entitymanager />
 	<map />
+	<menu />
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>

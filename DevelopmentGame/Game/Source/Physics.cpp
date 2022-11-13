@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Menu.h"
 #include "Box2D/Box2D/Box2D.h"
 
 // Tell the compiler to reference the compiled Box2D libraries
@@ -53,8 +54,8 @@ bool Physics::PreUpdate()
 
 	// Step (update) the World
 	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
-	if (app->scene->title_screen != NULL) {
-		world->Step(0.0f / 60.0f, 6, 2);
+	if (app->scene->title_screen != NULL || app->menu->dead || app->menu->GetGameState()) {
+		world->Step(0.0f, 6, 2);
 	}
 	else {
 		world->Step(1.0f / 60.0f, 6, 2);
