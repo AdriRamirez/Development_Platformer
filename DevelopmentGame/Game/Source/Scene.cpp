@@ -51,10 +51,9 @@ bool Scene::Start()
 
 	a = 0;
 	r = { 0, 0, 2560, 1440 };
-	// L03: DONE: Load map
-	//app->map->Load();
 
-	// L04: DONE 7: Set the window title with map/tileset info
+
+	//  Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width,
 		app->map->mapData.height,
@@ -152,8 +151,6 @@ bool Scene::Update(float dt)
 	}
 		
 
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-
 	// Draw map
 	app->map->Draw();
 
@@ -170,9 +167,6 @@ bool Scene::PostUpdate()
 		app->render->DrawTexture(title_screen, 0, 0);
 	}
 	
-
-	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;*/
 
 	int c_x = -app->render->camera.x;
 	r.x = c_x;
@@ -220,20 +214,6 @@ bool Scene::CleanUp()
 	return true;
 }
 
-bool Scene::NextLevel(int level) {
-
-	if (title_screen != NULL) {
-		SetA_Black();
-		FadeFromBlack(level);
-	}
-	else {
-		FadeToBlack(level);
-	}
-
-	title_screen = NULL;
-
-	return true;
-}
 
 bool Scene::ReturnStartScreen()
 {

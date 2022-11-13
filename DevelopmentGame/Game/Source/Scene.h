@@ -40,7 +40,7 @@ public:
 	{
 		a = 255;
 	}
-	bool NextLevel(int level);
+
 	bool FadeFromBlack(int level);
 	bool FadeToBlack(int level);
 	bool ReturnStartScreen();
