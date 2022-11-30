@@ -78,7 +78,7 @@ void Map::Draw()
 
 
                             app->render->DrawTexture(tileset->texture,
-                                pos.x = pos.x - app->render->camera.x / 1.11,
+                                pos.x = pos.x - app->render->camera.x / mapLayerItem->data->properties.GetProperty("parallax_value")->numValue,
                                 pos.y,
                                 &r);
                     }
@@ -366,7 +366,13 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     {
         Properties::Property* p = new Properties::Property();
         p->name = propertieNode.attribute("name").as_string();
-        p->value = propertieNode.attribute("value").as_bool(); // (!!) I'm assuming that all values are bool !!
+
+        if (p->name == SString("parallax") || p->name == SString("draw")) {
+            p->value = propertieNode.attribute("value").as_bool(); // (!!) I'm assuming that all values are bool !!
+        }
+        if (p->name == SString("parallax_value")) {
+            p->numValue = propertieNode.attribute("value").as_float();
+        }
 
         properties.list.Add(p);
     }
