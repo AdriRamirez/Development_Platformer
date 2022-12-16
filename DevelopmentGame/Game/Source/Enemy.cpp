@@ -12,6 +12,19 @@
 Floor_Enemy::Floor_Enemy() : Entity(EntityType::FLOOR_ENEMY)
 {
 	name.Create("floor_enemy");
+
+	//walk animation 
+	walkAnimR.PushBack({ 4, 4, 52, 32 });
+	walkAnimR.PushBack({ 60, 4, 52, 32 });
+	walkAnimR.PushBack({ 116, 4, 52, 32 });
+	walkAnimR.PushBack({ 172, 4, 52, 32 });
+	walkAnimR.speed = 0.1f;
+
+	walkAnimL.PushBack({ 4, 4, 52, 32 });
+	walkAnimL.PushBack({ 60, 4, 52, 32 });
+	walkAnimL.PushBack({ 116, 4, 52, 32 });
+	walkAnimL.PushBack({ 172, 4, 52, 32 });
+	walkAnimL.speed = 0.1f;
 }
 
 Floor_Enemy::~Floor_Enemy() {}

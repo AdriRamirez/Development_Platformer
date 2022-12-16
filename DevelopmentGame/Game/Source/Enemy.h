@@ -24,6 +24,14 @@ public:
 
 public:
 
+	// The pointer to the current enemy animation
+	// It will be switched depending on the enemy's movement direction
+	Animation* currentEnemyAnimation = nullptr;
+
+	// A set of animations
+	Animation walkAnimR;
+	Animation walkAnimL;
+
 private:
 
 	SDL_Texture* texture;

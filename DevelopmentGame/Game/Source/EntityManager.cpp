@@ -93,6 +93,14 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Item();
 		break;
 
+	case EntityType::FLOOR_ENEMY:
+		entity = new Item();
+		break;
+
+	case EntityType::AIR_ENEMY:
+		entity = new Item();
+		break;
+
 	default: break;
 	}
 

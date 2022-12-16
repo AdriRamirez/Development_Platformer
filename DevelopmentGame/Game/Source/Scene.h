@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Item.h"
 
 struct SDL_Texture;
@@ -54,6 +55,9 @@ public:
 	SDL_Texture* title_screen;
 	int current_lvl = 0;
 	float x = 50, y = 500;
+
+	Floor_Enemy* floor_enemy;
+
 private:
 	SDL_Rect r;
 	Uint8 a;
