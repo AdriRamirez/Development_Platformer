@@ -58,6 +58,8 @@ public:
 
 	Floor_Enemy* floor_enemy;
 
+	Air_Enemy* air_enemy;
+
 private:
 	SDL_Rect r;
 	Uint8 a;

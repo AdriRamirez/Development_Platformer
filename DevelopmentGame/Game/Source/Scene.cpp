@@ -42,6 +42,9 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
 	floor_enemy->parameters = config.child("floor_enemy");
+
+	air_enemy = (Air_Enemy*)app->entityManager->CreateEntity(EntityType::AIR_ENEMY);
+	air_enemy->parameters = config.child("air_enemy");
 	
 	return ret;
 }
