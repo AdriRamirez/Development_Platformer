@@ -1,5 +1,6 @@
 #include "EntityManager.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Item.h"
 #include "App.h"
 #include "Textures.h"
@@ -94,11 +95,11 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 
 	case EntityType::FLOOR_ENEMY:
-		entity = new Item();
+		entity = new Floor_Enemy();
 		break;
 
 	case EntityType::AIR_ENEMY:
-		entity = new Item();
+		entity = new Air_Enemy();
 		break;
 
 	default: break;

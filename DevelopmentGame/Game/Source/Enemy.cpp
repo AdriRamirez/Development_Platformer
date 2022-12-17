@@ -133,10 +133,10 @@ bool Air_Enemy::Start() {
 	currentAirEnemyAnimation = &flyAnimL;
 
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::STATIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::KINEMATIC);
 
 	// L07 DONE 7: Assign collider type
-	pbody->ctype = ColliderType::PLATFORM;
+	pbody->ctype = ColliderType::ENEMY;
 
 	return true;
 }
