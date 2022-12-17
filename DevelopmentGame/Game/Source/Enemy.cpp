@@ -54,7 +54,7 @@ bool Floor_Enemy::Start() {
 	currentFloorEnemyAnimation = &walkAnimL;
 
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateRectangle(position.x, position.y, 40, 30, bodyType::KINEMATIC);
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
@@ -73,7 +73,7 @@ bool Floor_Enemy::Update()
 	currentFloorEnemyAnimation->Update();
 
 	SDL_Rect rect = currentFloorEnemyAnimation->GetCurrentFrame();
-	app->render->DrawTexture(textureLeft, position.x, position.y, &rect);
+	app->render->DrawTexture(textureLeft, position.x + -10, position.y, &rect);
 
 	return true;
 }

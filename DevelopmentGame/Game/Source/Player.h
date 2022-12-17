@@ -59,10 +59,14 @@ private:
 	bool inAir = true;
 	bool djump = true;
 	bool rollin = false;
+	bool dive = false;
 
 	float jumpForce = 20.0f;
 
 	int pickCoinFxId;
+
+	int numLives = 2;
+	int lifePoints = 2;
 
 public:
 	PhysBody* pbody;
@@ -85,6 +89,8 @@ public:
 	Animation doublejumpAnimL;
 	Animation deathAnimR;
 	Animation deathAnimL;
+	Animation diveAnimR;
+	Animation diveAnimL;
 
 };
 

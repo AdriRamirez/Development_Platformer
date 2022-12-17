@@ -40,8 +40,14 @@ bool Scene::Awake(pugi::xml_node& config)
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");
 
-	floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
-	floor_enemy->parameters = config.child("floor_enemy");
+	for (pugi::xml_node floorEnemyNode = config.child("floor_enemy"); floorEnemyNode; floorEnemyNode = floorEnemyNode.next_sibling("floor_enemy"))
+	{
+		Floor_Enemy* floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
+		floor_enemy->parameters = floorEnemyNode;
+	}
+
+	//floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
+	//floor_enemy->parameters = config.child("floor_enemy");
 
 	air_enemy = (Air_Enemy*)app->entityManager->CreateEntity(EntityType::AIR_ENEMY);
 	air_enemy->parameters = config.child("air_enemy");

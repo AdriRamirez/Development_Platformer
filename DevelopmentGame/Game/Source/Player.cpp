@@ -94,6 +94,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 	deathAnimL.PushBack({ 160, 1666, 74, 78 });
 	deathAnimL.speed = 0.1f;
 
+	//dive animation
+	diveAnimR.PushBack({ 4, 1006, 48, 72 });
+
+	diveAnimL.PushBack({ 4, 1006, 48, 72 });
+
 }
 
 Player::~Player() {
@@ -165,7 +170,6 @@ bool Player::Update()
 {
 
 	// Add physics to the player - updated player position using physics
-
 
 	float speed = 3.5f;
 
@@ -284,6 +288,40 @@ bool Player::Update()
 		}
 	}
 
+	//Dive
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		if (!app->scene->godMode && !app->menu->GetGameState()) {
+			if (inAir)
+			{
+				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, 0));
+				pbody->body->ApplyForceToCenter({ 0, 400 }, true);
+				dive = true;
+				djump = false;
+			}
+		}
+	}
+
+	if (dive == true)
+	{
+		if (lookLeft)
+		{
+			if (currentAnimation != &diveAnimL)
+			{
+				diveAnimL.Reset();
+				currentAnimation = &diveAnimL;
+			}
+		}
+		else
+		{
+			if (currentAnimation != &diveAnimR)
+			{
+				diveAnimR.Reset();
+				currentAnimation = &diveAnimR;
+			}
+		}
+	}
+
 	//Idle animation if player is not in the air and walking
 	if (currentAnimation != &walkAnimL && currentAnimation != &walkAnimR && !inAir)
 	{
@@ -348,7 +386,7 @@ bool Player::Update()
 		}
 
 	}
-	else if (pbody->body->GetLinearVelocity().y > 3 && inAir)
+	else if (pbody->body->GetLinearVelocity().y > 3 && inAir && dive != true)
 	{
 		if (lookLeft)
 		{
@@ -416,6 +454,12 @@ bool Player::Update()
 		app->render->DrawTexture(textureRight, position.x, position.y, &rect);
 	}
 
+	//Player death conditions
+	if (numLives == 0 || lifePoints == 0)
+	{
+		app->menu->dead = true;
+	}
+
 
 	return true;
 	
@@ -449,11 +493,24 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision PLATFORM");
 			app->audio->PlayFx(landSound);
 			inAir = false;
+			dive = false;
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			// death screen
-			app->menu->dead = true;
+			numLives--;
+			app->LoadGameRequest();
+			break;
+		case ColliderType::ENEMY:
+			if (dive == true)
+			{
+				pbody->body->ApplyForceToCenter({ 0, -400 }, true);
+				//app->entityManager->DestroyEntity(app->scene->floor_enemy);
+			}
+			else
+			{
+				//pbody->body->ApplyForceToCenter({ -200, 200 }, true);
+				lifePoints--;
+			}
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
