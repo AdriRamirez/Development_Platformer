@@ -544,11 +544,24 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ENEMY:
 			if (dive == true)
 			{
-				//pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, -9));
+				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, -8));
 				dive = false;
 				app->scene->enemyDeleted = true;
-				//app->entityManager->DestroyEntity(app->scene->floor_enemy);
+				app->entityManager->DestroyEntity(app->scene->floor_enemy);
 				
+			}
+			else
+			{
+				hit = true;
+			}
+			break;
+		case ColliderType::ENEMYAIR:
+			if (dive == true)
+			{
+				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, -8));
+				dive = false;
+				app->scene->enemyDeleted = true;
+				app->entityManager->DestroyEntity(app->scene->air_enemy);
 			}
 			else
 			{

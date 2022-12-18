@@ -146,7 +146,7 @@ bool Floor_Enemy::Draw() {
 
 	if (delete_enemy)
 	{
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		//app->physics->world->DestroyBody(pbody->body);
 		delete_enemy = false;
 	}
 
@@ -284,7 +284,12 @@ bool Floor_Enemy::CleanUp()
 	return true;
 }
 
-
+//
+//
+//
+//
+//
+// AIR ENEMY
 Air_Enemy::Air_Enemy() : Entity(EntityType::AIR_ENEMY)
 {
 	name.Create("air_enemy");
@@ -306,8 +311,6 @@ Air_Enemy::~Air_Enemy() {}
 
 bool Air_Enemy::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
 
 	//texturePath = parameters.attribute("texturepath").as_string();
 
@@ -319,18 +322,27 @@ bool Air_Enemy::Awake() {
 
 bool Air_Enemy::Start() {
 
-	//initilize textures
-	//texture = app->tex->Load(texturePath);
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	origin_x = position.x;
+	origin_y = position.y;
+
+
 	textureRight = app->tex->Load(texRight);
 	textureLeft = app->tex->Load(texLeft);
+
 	speed = 1.00f;
+	lookLeft = true;
+
+	state = ENEMY_STATE::IDLE;
+
 	currentAirEnemyAnimation = &flyAnimL;
 
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
 	pbody = app->physics->CreateCircle(position.x, position.y, 25, bodyType::KINEMATIC);
 
 	// L07 DONE 7: Assign collider type
-	pbody->ctype = ColliderType::ENEMY;
+	pbody->ctype = ColliderType::ENEMYAIR;
 
 	return true;
 }
@@ -362,8 +374,26 @@ bool Air_Enemy::Update()
 		CheckAirEnemy();
 		break;
 	}
+	if (pbody->body->GetLinearVelocity().x >= 0)
+	{
+		lookLeft = false;
+	}
+	else
+	{
+		lookLeft = true;
+	}
+
 	SDL_Rect rect = currentAirEnemyAnimation->GetCurrentFrame();
-	app->render->DrawTexture(textureLeft, position.x - 20, position.y - 20, &rect);
+
+	if (lookLeft)
+	{
+		app->render->DrawTexture(textureLeft, position.x  -20, position.y -20, &rect);
+	}
+	else
+	{
+		app->render->DrawTexture(textureRight, position.x  -20, position.y -20, &rect);
+	}
+	
 
 	return true;
 }
@@ -374,6 +404,100 @@ void Air_Enemy::MoveAirEnemy() {
 	switch (mov) {
 	case 0:
 		pbody->body->SetLinearVelocity({ 0, -speed });
+		break;
+	case 1: // down
+		pbody->body->SetLinearVelocity({ 0, speed });
+		break;
+	case 2: // left
+		pbody->body->SetLinearVelocity({ -speed, 0 });
+		break;
+	case 3: // right
+		pbody->body->SetLinearVelocity({ speed, 0 });
+		break;
+	default:
+		break;
+	}	
+	cd_air_enemy = 3200;
+}
+void Air_Enemy::CheckAirEnemy()
+{
+	int mov = 0;//rand() % 3;
+
+	if (position.y + (32 * 10) < origin_y) // up
+	{
+		pbody->body->SetTransform({ pbody->body->GetPosition().x, origin_y - (32 * 10) }, 0);
+
+		switch (mov)
+		{
+		case 0: // down
+			pbody->body->SetLinearVelocity({ 0, speed });
+			break;
+		case 1: // left
+			pbody->body->SetLinearVelocity({ -speed, 0 });
+			break;
+		case 2: // right
+			pbody->body->SetLinearVelocity({ speed, 0 });
+			break;
+		default:
+			break;
+		}
+	}
+	else if (position.y -(32 * 10) > origin_y) // down
+	{
+		pbody->body->SetTransform({ pbody->body->GetPosition().x, origin_y + (32 * 10) }, 0);
+
+		switch (mov)
+		{
+		case 0: // up
+			pbody->body->SetLinearVelocity({ 0, -speed});
+			break;
+		case 1: // left
+			pbody->body->SetLinearVelocity({ -speed, 0 });
+			break;
+		case 2: // right
+			pbody->body->SetLinearVelocity({ speed, 0 });
+			break;
+		default:
+			break;
+		}
+	}
+	else if (position.x + (32 * 10) < origin_x) // left
+	{
+		pbody->body->SetTransform({ origin_x - (32 * 10), pbody->body->GetPosition().y }, 0);
+
+		switch (mov)
+		{
+		case 0: // up
+			pbody->body->SetLinearVelocity({ 0, -speed });
+			break;
+		case 1: // down
+			pbody->body->SetLinearVelocity({ 0, speed });
+			break;
+		case 2: // right
+			pbody->body->SetLinearVelocity({ speed, 0 });
+			break;
+		default:
+			break;
+		}
+	}
+	else if (position.x - (32 * 10) > origin_x) // right
+	{
+		pbody->body->SetTransform({ origin_x + (32 * 10), pbody->body->GetPosition().y }, 0);
+
+		switch (mov)
+		{
+		case 0: // up
+			pbody->body->SetLinearVelocity({ 0, -speed  });
+			break;
+		case 1: // down
+			pbody->body->SetLinearVelocity({ 0, speed });
+			break;
+		case 2: // left
+			pbody->body->SetLinearVelocity({ -speed, 0 });
+			break;
+		default:
+			break;
+		}
 	}
 }
 

@@ -112,12 +112,17 @@ public:
 
 	void MoveAirEnemy();
 	void CheckAirEnemy();
+	// load-save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
+
 
 public:
 
 	// The pointer to the current enemy animation
 	// It will be switched depending on the enemy's movement direction
 	Animation *currentAirEnemyAnimation = nullptr;
+	float origin_x, origin_y;
 	float speed;
 	// A set of animations
 	Animation flyAnimR;

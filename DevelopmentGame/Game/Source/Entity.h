@@ -97,7 +97,7 @@ public:
 	// want our Entity class, maybe it's not renderable...
 	fPoint position;       
 	bool renderable = true;
-
+	int p_in_array;
 	bool alive;
 };
 

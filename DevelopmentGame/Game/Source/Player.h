@@ -68,7 +68,7 @@ private:
 
 public:
 	PhysBody* pbody;
-
+	Entity* entity = NULL;
 	float x, y;
 	int w;
 
