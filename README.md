@@ -12,6 +12,8 @@ Double Jump
 Dive Attack         
 Pause & Death Menu         
 Debugging functions         
+Floor Enemy         
+Air Enemy         
 
 ## Controls
 
