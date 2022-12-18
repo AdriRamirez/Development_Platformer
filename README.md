@@ -8,14 +8,18 @@ Team name: Knights of the square table
 One level         
 Parallax         
 Basic Movement         
-Double Jump         
+Double Jump
+Dive Attack
 Pause & Death Menu         
 Debugging functions         
 
 ## Controls
 
 A - Move Left         
-D - Move Right         
+D - Move Right
+S - Dive Attack (in air)
+SPACE - Jump 
+SPACE - Double Jump (in air)
 W - Move Up (in god mode)         
 S - Move Down (in god mode)    
 Up arrow - Move camera up (in god mode)         
