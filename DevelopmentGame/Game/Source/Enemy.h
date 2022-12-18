@@ -65,6 +65,7 @@ public:
 
 	ENEMY_STATE state;
 
+	bool delete_enemy;
 	bool lookLeft;
 	float idleOb_x;
 	bool obLeft;

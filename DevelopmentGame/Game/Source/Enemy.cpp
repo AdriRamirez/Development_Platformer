@@ -155,7 +155,12 @@ bool Floor_Enemy::Draw() {
 
 
 	SDL_Rect rect = currentFloorEnemyAnimation->GetCurrentFrame();
-	
+
+	if (delete_enemy)
+	{
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		delete_enemy = false;
+	}
 	if (state != ENEMY_STATE::DEATH)
 	{
 		if (lookLeft)
@@ -206,6 +211,14 @@ void Floor_Enemy::MoveGroundEnemy()
 			obLeft = false;
 		}
 	}
+}
+
+bool Floor_Enemy::DeleteEntity()
+{
+	state = ENEMY_STATE::DEATH;
+	delete_enemy = true;
+
+	return true;
 }
 
 void Floor_Enemy::CheckPlayer()
