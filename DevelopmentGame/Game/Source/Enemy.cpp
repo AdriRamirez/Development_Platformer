@@ -317,7 +317,7 @@ bool Air_Enemy::Start() {
 	currentAirEnemyAnimation = &flyAnimL;
 
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::KINEMATIC);
+	pbody = app->physics->CreateCircle(position.x, position.y, 25, bodyType::KINEMATIC);
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
@@ -336,7 +336,7 @@ bool Air_Enemy::Update()
 	currentAirEnemyAnimation->Update();
 
 	SDL_Rect rect = currentAirEnemyAnimation->GetCurrentFrame();
-	app->render->DrawTexture(textureLeft, position.x, position.y, &rect);
+	app->render->DrawTexture(textureLeft, position.x - 20, position.y - 20, &rect);
 
 	return true;
 }
