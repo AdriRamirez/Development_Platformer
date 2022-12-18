@@ -87,6 +87,8 @@ private:
 	const char* texRight = NULL;
 	const char* texLeft = NULL;
 
+	int floorEnemySpeed;
+
 	PhysBody* pbody;
 };
 
@@ -109,6 +111,8 @@ public:
 
 	bool CleanUp();
 
+	void Movement();
+
 public:
 
 	// The pointer to the current enemy animation
@@ -130,6 +134,10 @@ private:
 
 	const char* texRight = NULL;
 	const char* texLeft = NULL;
+
+	int airEnemySpeed;
+
+	bool lookLeft;
 
 	PhysBody* pbody;
 };

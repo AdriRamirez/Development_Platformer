@@ -35,9 +35,6 @@ Floor_Enemy::~Floor_Enemy() {}
 
 bool Floor_Enemy::Awake() {
 
-
-
-
 	//texturePath = parameters.attribute("texturepath").as_string();
 
 	texRight = parameters.attribute("texRight").as_string();
@@ -52,12 +49,14 @@ bool Floor_Enemy::Start() {
 	position.y = parameters.attribute("y").as_int();
 	origin_x = position.x;
 	origin_y = position.y;
+
+	lookLeft = true;
+
 	//initilize textures
 	//texture = app->tex->Load(texturePath);
 	textureRight = app->tex->Load(texRight);
 	textureLeft = app->tex->Load(texLeft);
 	speed = 1.0f;
-	lookLeft = true;
 
 	detectionRange = 500.00f;
 
@@ -136,6 +135,18 @@ bool Floor_Enemy::Update()
 	}
 	
 	Draw();
+
+	SDL_Rect rect = currentFloorEnemyAnimation->GetCurrentFrame();
+
+
+	if (lookLeft)
+	{
+		app->render->DrawTexture(textureLeft, position.x - 10, position.y, &rect);
+	}
+	else
+	{
+		app->render->DrawTexture(textureRight, position.x - 10, position.y, &rect);
+	}
 
 	return true;
 }

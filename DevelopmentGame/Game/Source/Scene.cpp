@@ -40,14 +40,16 @@ bool Scene::Awake(pugi::xml_node& config)
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");
 
+	/*
 	for (pugi::xml_node floorEnemyNode = config.child("floor_enemy"); floorEnemyNode; floorEnemyNode = floorEnemyNode.next_sibling("floor_enemy"))
 	{
 		Floor_Enemy* floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
 		floor_enemy->parameters = floorEnemyNode;
 	}
+	*/
 
-	//floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
-	//floor_enemy->parameters = config.child("floor_enemy");
+	floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
+	floor_enemy->parameters = config.child("floor_enemy");
 
 	air_enemy = (Air_Enemy*)app->entityManager->CreateEntity(EntityType::AIR_ENEMY);
 	air_enemy->parameters = config.child("air_enemy");
@@ -170,6 +172,11 @@ bool Scene::Update(float dt)
 
 	// Draw map
 	app->map->Draw();
+	
+	if (app->scene->enemyDeleted) 
+	{
+		app->scene->floor_enemy->position.y = -5000;
+	}
 
 	return true;
 }
@@ -213,15 +220,35 @@ bool Scene::LoadState(pugi::xml_node& data)
 		player->currentAnimation = &player->idleAnimR;
 	}
 
+	floor_enemy->position.x = data.child("floor_enemy").attribute("x").as_int();
+	floor_enemy->position.y = data.child("floor_enemy").attribute("y").as_int();
+	b2Vec2 fepos;
+	fepos.x = PIXEL_TO_METERS(floor_enemy->position.x);
+	fepos.y = PIXEL_TO_METERS(floor_enemy->position.y);
+
+	air_enemy->position.x = data.child("air_enemy").attribute("x").as_int();
+	air_enemy->position.y = data.child("air_enemy").attribute("y").as_int();
+	b2Vec2 aepos;
+	aepos.x = PIXEL_TO_METERS(floor_enemy->position.x);
+	aepos.y = PIXEL_TO_METERS(floor_enemy->position.y);
+
 	return true;
 }
 
 bool Scene::SaveState(pugi::xml_node& data)
 {
 	pugi::xml_node pos = data.append_child("player");
+	pugi::xml_node fepos = data.append_child("floor_enemy");
+	pugi::xml_node aepos = data.append_child("air_enemy");
 
 	pos.append_attribute("x") = player->position.x;
 	pos.append_attribute("y") = player->position.y;
+
+	fepos.append_attribute("x") = floor_enemy->position.x;
+	fepos.append_attribute("y") = floor_enemy->position.y;
+
+	aepos.append_attribute("x") = air_enemy->position.x;
+	aepos.append_attribute("y") = air_enemy->position.y;
 
 
 	return true;

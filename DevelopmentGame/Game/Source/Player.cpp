@@ -99,6 +99,22 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	diveAnimL.PushBack({ 4, 1006, 48, 72 });
 
+	//hit animation
+	hitAnimR.PushBack({ 4, 1584, 70, 78 });
+	hitAnimR.PushBack({ 74, 1584, 70, 78 });
+	hitAnimR.PushBack({ 4, 1584, 70, 78 });
+	hitAnimR.PushBack({ 74, 1584, 70, 78 });
+	hitAnimR.PushBack({ 4, 1584, 70, 78 });
+	hitAnimR.PushBack({ 74, 1584, 70, 78 });
+	hitAnimR.speed = 0.4f;
+
+	hitAnimL.PushBack({ 4, 1584, 70, 78 });
+	hitAnimL.PushBack({ 74, 1584, 70, 78 });
+	hitAnimL.PushBack({ 4, 1584, 70, 78 });
+	hitAnimL.PushBack({ 74, 1584, 70, 78 });
+	hitAnimL.PushBack({ 4, 1584, 70, 78 });
+	hitAnimL.PushBack({ 74, 1584, 70, 78 });
+	hitAnimL.speed = 0.4f;
 }
 
 Player::~Player() {
@@ -173,10 +189,9 @@ bool Player::Update()
 
 	float speed = 3.5f;
 
-
 	//Move left
 	if (!app->menu->GetGameState()) {
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && hit == false)
 		{
 			if (!app->scene->godMode)
 				pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
@@ -192,7 +207,7 @@ bool Player::Update()
 			}
 		}
 
-		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP && hit == false)
 		{
 
 			pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
@@ -207,7 +222,7 @@ bool Player::Update()
 
 	//Move right
 	if (!app->menu->GetGameState()) {
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && hit == false)
 		{
 			if (!app->scene->godMode)
 				pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
@@ -223,7 +238,7 @@ bool Player::Update()
 			}
 		}
 
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP && hit == false)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(0, pbody->body->GetLinearVelocity().y));
 
@@ -264,7 +279,7 @@ bool Player::Update()
 	}
 
 	//Jump
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && hit == false)
 	{
 		if (!app->scene->godMode && !app->menu->GetGameState()) {
 			if (!inAir)
@@ -289,12 +304,11 @@ bool Player::Update()
 	}
 
 	//Dive
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && hit == false)
 	{
 		if (!app->scene->godMode && !app->menu->GetGameState()) {
 			if (inAir)
 			{
-				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, 0));
 				pbody->body->ApplyForceToCenter({ 0, 400 }, true);
 				dive = true;
 				djump = false;
@@ -455,19 +469,41 @@ bool Player::Update()
 	}
 
 	//Player death conditions
-	if (numLives == 0 || lifePoints == 0)
+	if (lifePoints == 0)
 	{
 		app->menu->dead = true;
 	}
+	
+	//Player hit event
+	if (hit)
+	{
+		lifePoints--;
 
+			if (lookLeft)
+			{
+				if (currentAnimation != &hitAnimL)
+				{
+					hitAnimL.Reset();
+					currentAnimation = &hitAnimL;
+					pbody->body->SetLinearVelocity(b2Vec2(3, pbody->body->GetLinearVelocity().y));
+				}
+			}
+			else
+			{
+				if (currentAnimation != &hitAnimR)
+				{
+					hitAnimR.Reset();
+					currentAnimation = &hitAnimR;
+					pbody->body->SetLinearVelocity(b2Vec2(-3, pbody->body->GetLinearVelocity().y));
+				}
+			}
+	}
 
 	return true;
 	
 }
 
 bool Player::PostUpdate() {
-
-
 
 	return true;
 }
@@ -499,22 +535,23 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			app->audio->PlayFx(landSound);
 			inAir = false;
 			dive = false;
+			hit = false;
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			numLives--;
-			app->LoadGameRequest();
+			app->menu->dead = true;
 			break;
 		case ColliderType::ENEMY:
 			if (dive == true)
 			{
-				pbody->body->ApplyForceToCenter({ 0, -400 }, true);
-				//app->entityManager->DestroyEntity(app->scene->floor_enemy);
+				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, -9));
+				dive = false;
+				app->scene->enemyDeleted = true;
+				app->entityManager->DestroyEntity(app->scene->floor_enemy);
 			}
 			else
 			{
-				//pbody->body->ApplyForceToCenter({ -200, 200 }, true);
-				lifePoints--;
+				hit = true;
 			}
 			break;
 		case ColliderType::UNKNOWN:

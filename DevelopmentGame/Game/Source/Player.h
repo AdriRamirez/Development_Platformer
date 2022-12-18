@@ -59,6 +59,7 @@ private:
 	bool djump = true;
 	bool rollin = false;
 	bool dive = false;
+	bool hit = false;
 
 	float jumpForce = 20.0f;
 
@@ -72,7 +73,7 @@ public:
 	int w;
 
 	int numLives = 2;
-	int lifePoints = 2;
+	int lifePoints = 100;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
@@ -95,6 +96,8 @@ public:
 	Animation deathAnimL;
 	Animation diveAnimR;
 	Animation diveAnimL;
+	Animation hitAnimR;
+	Animation hitAnimL;
 
 };
 

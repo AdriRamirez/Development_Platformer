@@ -60,6 +60,8 @@ public:
 
 	Air_Enemy* air_enemy;
 
+	bool enemyDeleted = false;
+
 private:
 	SDL_Rect r;
 	Uint8 a;
