@@ -18,7 +18,7 @@ class Audio;
 class Scene;
 class EntityManager;
 class Map;
-//L07 DONE 2: Add Physics module
+class PathFinding;
 class Physics;
 class Player;
 class Menu;
@@ -91,6 +91,7 @@ public:
 	Scene* scene;
 	EntityManager* entityManager;
 	Map* map;
+	PathFinding* pathfinding;
 	Physics* physics;
 	Menu* menu;
 

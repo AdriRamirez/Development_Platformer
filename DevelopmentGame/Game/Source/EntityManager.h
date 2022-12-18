@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include "List.h"
+#include "Point.h"
 
 class EntityManager : public Module
 {
@@ -23,6 +24,8 @@ public:
 	// Called every frame
 	bool Update(float dt);
 
+	bool PreUpdate();
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -32,10 +35,11 @@ public:
 	void DestroyEntity(Entity* entity);
 
 	void AddEntity(Entity* entity);
-
+	Entity* GetPlayer();
 public:
 
 	List<Entity*> entities;
+
 
 };
 

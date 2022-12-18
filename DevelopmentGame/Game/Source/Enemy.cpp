@@ -8,6 +8,8 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Entity.h"
+
 
 Floor_Enemy::Floor_Enemy() : Entity(EntityType::FLOOR_ENEMY)
 {
@@ -33,8 +35,8 @@ Floor_Enemy::~Floor_Enemy() {}
 
 bool Floor_Enemy::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
+
+
 
 	//texturePath = parameters.attribute("texturepath").as_string();
 
@@ -46,18 +48,51 @@ bool Floor_Enemy::Awake() {
 
 bool Floor_Enemy::Start() {
 
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	origin_x = position.x;
+	origin_y = position.y;
 	//initilize textures
 	//texture = app->tex->Load(texturePath);
 	textureRight = app->tex->Load(texRight);
 	textureLeft = app->tex->Load(texLeft);
+	speed = 1.0f;
+	lookLeft = true;
+
+	detectionRange = 500.00f;
+
+	state = ENEMY_STATE::IDLE;
+	obLeft = false;
 
 	currentFloorEnemyAnimation = &walkAnimL;
 
-	// L07 DONE 4: Add a physics to an item - initialize the physics body
+	// Add a physics to an enemy - initialize the physics body
 	pbody = app->physics->CreateRectangle(position.x, position.y, 40, 30, bodyType::KINEMATIC);
 
-	// L07 DONE 7: Assign collider type
+	// Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
+
+	return true;
+}
+
+bool Floor_Enemy::PreUpdate() {
+
+	if (state != ENEMY_STATE::DEATH)
+	{
+		//position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		//position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+		position.x = pbody->body->GetPosition().x;
+		position.y = pbody->body->GetPosition().y;
+		
+		if (obLeft)
+		{
+			idleOb_x = origin_x - (32 * 10);
+		}
+		else
+		{
+			idleOb_x = origin_x + (32 * 10);
+		}
+	}
 
 	return true;
 }
@@ -68,21 +103,146 @@ bool Floor_Enemy::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	//app->render->DrawTexture(texture, position.x, position.y);
-
 	currentFloorEnemyAnimation->Update();
 
-	SDL_Rect rect = currentFloorEnemyAnimation->GetCurrentFrame();
-	app->render->DrawTexture(textureLeft, position.x + -10, position.y, &rect);
+	// update path
+	switch (state)
+	{
+	case ENEMY_STATE::IDLE:
+		MoveGroundEnemy();
+		break;
+	case ENEMY_STATE::HUNT:
+		//EnemyHunting();
+		break;
+	case ENEMY_STATE::RETURN:
+		//EnemyReturning(dt);
+		break;
+	default:
+		break;
+	}
+
+	if (pbody->body->GetLinearVelocity().x >= 0)
+	{
+		lookLeft = false;
+	}
+	else
+	{
+		lookLeft = true;
+	}
+
+	if (state != ENEMY_STATE::DEATH)
+	{
+		//CheckPlayer();
+	}
+	
+	Draw();
 
 	return true;
 }
 
-bool Floor_Enemy::PostUpdate() {
+bool Floor_Enemy::Draw() {
 
 
+	SDL_Rect rect = currentFloorEnemyAnimation->GetCurrentFrame();
+	
+	if (state != ENEMY_STATE::DEATH)
+	{
+		if (lookLeft)
+		{
+			app->render->DrawTexture(textureLeft, position.x + -10, position.y, &rect);
+		}
+		else 
+		{
+			app->render->DrawTexture(textureRight, position.x + -10, position.y, &rect);
+		}
+		if (state == ENEMY_STATE::HUNT || state == ENEMY_STATE::RETURN)
+		{
+			if (app->physics->debug && path_save)
+			{
+				app->pathfinding->DrawPath(path_save, position, EntityType::FLOOR_ENEMY);
+			}
+		}
+	}
+	else
+	{
+		alive = false;
+	}
 
 	return true;
+}
+void Floor_Enemy::MoveGroundEnemy()
+{
+	if (!obLeft)
+	{
+		if (position.x < idleOb_x)
+		{
+			pbody->body->SetLinearVelocity({ speed, pbody->body->GetLinearVelocity().y });
+		}
+		else
+		{
+			obLeft = true;
+		}
+
+	}
+	else if (obLeft)
+	{
+		if (position.x > idleOb_x)
+		{
+			pbody->body->SetLinearVelocity({ -speed, pbody->body->GetLinearVelocity().y });
+		}
+		else
+		{
+			obLeft = false;
+		}
+	}
+}
+
+void Floor_Enemy::CheckPlayer()
+{
+	Entity* player = app->entityManager->GetPlayer();
+
+	if (position.x + detectionRange > player->GetPlayerPosition().x && position.x - detectionRange < player->GetPlayerPosition().x
+		&& position.y + detectionRange > player->GetPlayerPosition().y && position.y - detectionRange < player->GetPlayerPosition().y)
+	{
+		if (state != ENEMY_STATE::HUNT)
+		{
+			state = ENEMY_STATE::HUNT;
+		}
+	}
+	else
+	{
+		if (state == ENEMY_STATE::HUNT)
+		{
+			state = ENEMY_STATE::RETURN;
+		}
+	}
+}
+
+void Floor_Enemy::EnemyHunting()
+{
+	PathFinding* path = new PathFinding();
+	float dist;
+
+	Entity* player = app->entityManager->GetPlayer();
+	path->CreatePath({ (int)position.x, 0 }, { (int)player->GetPlayerPosition().x, 0 });
+	int ob_x = path->GetLastPath()->At(path->GetLastPath()->Count() - 1)->x;
+
+	if ((ob_x - position.x) > 0)
+	{
+		dist = 1.5f;
+	}
+	else
+	{
+		dist = -1.5f;
+	}
+	pbody->body->SetLinearVelocity({ dist * speed, pbody->body->GetLinearVelocity().y });
+
+	path_save = path;
+}
+
+void Floor_Enemy::SwitchDirection()
+{
+	obLeft = !obLeft;
 }
 
 bool Floor_Enemy::CleanUp()

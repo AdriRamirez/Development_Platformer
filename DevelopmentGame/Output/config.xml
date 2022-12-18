@@ -30,7 +30,7 @@
 	        jumpFx = "Assets/Audio/Sound Effects/knight_jump.ogg"
 			landFx = "Assets/Audio/Sound Effects/knight_land.ogg"/>
 
-	 <floor_enemy x="300" y="500"
+	 <floor_enemy x="400" y="500"
 		    texturepath ="Assets/Textures/enemies/beeto.png"
 	        texRight = "Assets/Textures/enemies/beeto_right_animations.png"
 	        texLeft = "Assets/Textures/enemies/beeto_left_animations.png"/>

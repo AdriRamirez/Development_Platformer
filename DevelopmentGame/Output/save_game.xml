@@ -4,6 +4,7 @@
 	<window />
 	<textures />
 	<:anonymous />
+	<pathfinding />
 	<:anonymous />
 	<scene>
 		<player x="34" y="484" />

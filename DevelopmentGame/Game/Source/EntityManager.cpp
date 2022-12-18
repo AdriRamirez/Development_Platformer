@@ -142,3 +142,46 @@ bool EntityManager::Update(float dt)
 
 	return ret;
 }
+
+bool EntityManager::PreUpdate()
+{
+	bool ret = true;
+	ListItem<Entity*>* item;
+	Entity* pEntity = NULL;
+
+	for (item = entities.start; item != NULL && ret == true; item = item->next)
+	{
+		pEntity = item->data;
+
+		if (pEntity->active == false) continue;
+		ret = item->data->PreUpdate();
+	}
+
+	return ret;
+}
+
+Entity* EntityManager::GetPlayer()
+{
+	ListItem<Entity*>* item;
+	Entity* entity = NULL;
+
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		entity = item->data;
+
+		if (entity->type == EntityType::PLAYER)
+		{
+			return entity;
+		}
+	}
+
+	return NULL;
+}
+void Entity::SwitchDirection()
+{
+
+}
+fPoint Entity::GetPlayerPosition()
+{
+	return { 0, 0 };
+}

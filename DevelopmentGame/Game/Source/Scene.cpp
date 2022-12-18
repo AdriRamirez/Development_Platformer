@@ -207,6 +207,8 @@ bool Scene::LoadState(pugi::xml_node& data)
 	player->currentAnimation = &player->idleAnimR;
 	if (app->menu->dead)
 	{
+		player->numLives = 2;
+		player->lifePoints = 2;
 		app->menu->dead = false;
 		player->currentAnimation = &player->idleAnimR;
 	}

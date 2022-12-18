@@ -40,6 +40,7 @@ bool Textures::Awake(pugi::xml_node& config)
 bool Textures::Start()
 {
 	LOG("start textures");
+	tileX = Load("Assets/Textures/x.png");
 	bool ret = true;
 	return ret;
 }

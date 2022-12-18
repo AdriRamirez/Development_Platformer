@@ -159,8 +159,8 @@ bool Player::Start() {
 // Called each loop iteration
 bool Player::PreUpdate()
 {
-	position.x = pbody->body->GetPosition().x;
-	position.y = pbody->body->GetPosition().y;
+	//position.x = pbody->body->GetPosition().x;
+	//position.y = pbody->body->GetPosition().y;
 
 
 	return true;
@@ -475,6 +475,11 @@ bool Player::PostUpdate() {
 bool Player::CleanUp()
 {
 	return true;
+}
+
+fPoint Player::GetPlayerPosition()
+{
+	return position;
 }
 
 

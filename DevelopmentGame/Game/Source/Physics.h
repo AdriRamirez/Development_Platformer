@@ -52,6 +52,7 @@ public:
 	b2Body* body;
 	Entity* listener;
 	ColliderType ctype;
+	
 };
 
 // Module --------------------------------------
@@ -78,12 +79,14 @@ public:
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
-
-private:
+	// Box2D World
+	b2World* world;
 
 	// Debug mode
 	bool debug;
+private:
 
-	// Box2D World
-	b2World* world;
+
+
+
 };

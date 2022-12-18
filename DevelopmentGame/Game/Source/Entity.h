@@ -6,6 +6,8 @@
 #include "Input.h"
 #include "Render.h"
 
+#include "Box2D/Box2D/Box2D.h"
+
 class PhysBody;
 
 enum class EntityType
@@ -34,6 +36,11 @@ public:
 	}
 
 	virtual bool Update()
+	{
+		return true;
+	}
+
+	virtual bool PreUpdate()
 	{
 		return true;
 	}
@@ -75,6 +82,9 @@ public:
 	
 	};
 
+	virtual fPoint GetPlayerPosition();
+	virtual void SwitchDirection();
+
 public:
 
 	SString name;
@@ -84,8 +94,10 @@ public:
 
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...
-	iPoint position;       
+	fPoint position;       
 	bool renderable = true;
+
+	bool alive;
 };
 
 #endif // __ENTITY_H__

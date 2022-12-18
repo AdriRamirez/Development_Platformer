@@ -35,6 +35,8 @@ public:
 public:
 
 	List<SDL_Texture*> textures;
+
+	SDL_Texture* tileX = NULL;
 };
 
 

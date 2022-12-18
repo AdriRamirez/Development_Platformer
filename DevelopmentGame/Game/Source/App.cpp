@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
@@ -26,7 +27,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	//L07 DONE 2: Add Physics module
+	pathfinding = new PathFinding();
 	physics = new Physics();
 	scene = new Scene();
 	entityManager = new EntityManager();
@@ -39,7 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
-	//L07 DONE 2: Add Physics module
+	AddModule(pathfinding);
 	AddModule(physics);
 	AddModule(scene);
 	AddModule(entityManager);
