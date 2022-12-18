@@ -33,7 +33,7 @@ public:
 	Entity* CreateEntity(EntityType type);
 
 	void DestroyEntity(Entity* entity);
-
+	void KillEnemy(fPoint pos);
 	void AddEntity(Entity* entity);
 	Entity* GetPlayer();
 public:

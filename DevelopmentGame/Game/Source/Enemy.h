@@ -37,13 +37,11 @@ public:
 
 	bool CleanUp();
 
-	void ReviveGroundEnemy();
-
 	void MoveGroundEnemy();
 	void CheckPlayer();
 
 	void EnemyHunting();
-	void EnemyReturning(float dt);
+	void EnemyReturning();
 
 	bool DeleteEntity();
 
@@ -112,17 +110,22 @@ public:
 
 	bool CleanUp();
 
-	void Movement();
+	void MoveAirEnemy();
+	void CheckAirEnemy();
 
 public:
 
 	// The pointer to the current enemy animation
 	// It will be switched depending on the enemy's movement direction
 	Animation *currentAirEnemyAnimation = nullptr;
-
+	float speed;
 	// A set of animations
 	Animation flyAnimR;
 	Animation flyAnimL;
+
+	ENEMY_STATE state;
+
+	float cd_air_enemy = 0;
 
 private:
 

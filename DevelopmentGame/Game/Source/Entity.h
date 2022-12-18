@@ -77,13 +77,14 @@ public:
 			CleanUp();
 		}
 	}
-
+	virtual bool Draw();
 	virtual void OnCollision(PhysBody* physA, PhysBody* physB) {
 	
 	};
 
 	virtual fPoint GetPlayerPosition();
 	virtual void SwitchDirection();
+	virtual bool DeleteEntity();
 
 public:
 

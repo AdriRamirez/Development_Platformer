@@ -110,7 +110,26 @@ Entity* EntityManager::CreateEntity(EntityType type)
 
 	return entity;
 }
+void EntityManager::KillEnemy(fPoint pos)
+{
+	ListItem<Entity*>* item;
+	Entity* entity = NULL;
 
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		entity = item->data;
+
+		if (entity->type == EntityType::FLOOR_ENEMY || entity->type == EntityType::AIR_ENEMY)
+		{
+			if (pos.x + 1.5f > entity->position.x && pos.x - 1.5f < entity->position.x && pos.y + 2.0f > entity->position.y && pos.y - 2.0f < entity->position.y)
+			{
+				entity->DeleteEntity();
+
+				break;
+			}
+		}
+	}
+}
 void EntityManager::DestroyEntity(Entity* entity)
 {
 	ListItem<Entity*>* item;
@@ -177,6 +196,10 @@ Entity* EntityManager::GetPlayer()
 
 	return NULL;
 }
+bool Entity::Draw()
+{
+	return true;
+}
 void Entity::SwitchDirection()
 {
 
@@ -184,4 +207,9 @@ void Entity::SwitchDirection()
 fPoint Entity::GetPlayerPosition()
 {
 	return { 0, 0 };
+}
+
+bool Entity::DeleteEntity()
+{
+	return true;
 }

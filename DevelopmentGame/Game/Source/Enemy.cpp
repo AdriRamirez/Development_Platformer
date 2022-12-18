@@ -136,18 +136,6 @@ bool Floor_Enemy::Update()
 	
 	Draw();
 
-	SDL_Rect rect = currentFloorEnemyAnimation->GetCurrentFrame();
-
-
-	if (lookLeft)
-	{
-		app->render->DrawTexture(textureLeft, position.x - 10, position.y, &rect);
-	}
-	else
-	{
-		app->render->DrawTexture(textureRight, position.x - 10, position.y, &rect);
-	}
-
 	return true;
 }
 
@@ -161,6 +149,7 @@ bool Floor_Enemy::Draw() {
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
 		delete_enemy = false;
 	}
+
 	if (state != ENEMY_STATE::DEATH)
 	{
 		if (lookLeft)
@@ -241,7 +230,6 @@ void Floor_Enemy::CheckPlayer()
 		}
 	}
 }
-
 void Floor_Enemy::EnemyHunting()
 {
 	PathFinding* path = new PathFinding();
@@ -263,11 +251,33 @@ void Floor_Enemy::EnemyHunting()
 
 	path_save = path;
 }
+void Floor_Enemy::EnemyReturning()
+{
+	PathFinding* path = new PathFinding();
 
+	path->CreatePath({ (int)position.x, 0 }, { (int)origin_x, 0 });
+	int ob_x = path->GetLastPath()->At(path->GetLastPath()->Count() - 1)->x;
+
+	pbody->body->SetLinearVelocity({ (ob_x - position.x) * speed, pbody->body->GetLinearVelocity().y });
+
+	if (position.x + PIXEL_TO_METERS(1.5f) > origin_x && position.x - PIXEL_TO_METERS(1.5f) < origin_x)
+	{
+		state = ENEMY_STATE::IDLE;
+	}
+
+	if (position.y + PIXEL_TO_METERS(1.5f) > origin_y || position.y - PIXEL_TO_METERS(1.5f) < origin_y)
+	{
+		origin_x = position.x;
+		origin_y = position.y;
+	}
+
+	path_save = path;
+}
 void Floor_Enemy::SwitchDirection()
 {
 	obLeft = !obLeft;
 }
+
 
 bool Floor_Enemy::CleanUp()
 {
@@ -313,7 +323,7 @@ bool Air_Enemy::Start() {
 	//texture = app->tex->Load(texturePath);
 	textureRight = app->tex->Load(texRight);
 	textureLeft = app->tex->Load(texLeft);
-
+	speed = 1.00f;
 	currentAirEnemyAnimation = &flyAnimL;
 
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
@@ -335,14 +345,39 @@ bool Air_Enemy::Update()
 
 	currentAirEnemyAnimation->Update();
 
+	// update path
+	switch (state)
+	{
+	case ENEMY_STATE::IDLE:
+		if (cd_air_enemy <= 0)
+		{
+			MoveAirEnemy();
+			int u = 0;
+		}
+		else
+		{
+			cd_air_enemy -= 100;
+		}
+
+		CheckAirEnemy();
+		break;
+	}
 	SDL_Rect rect = currentAirEnemyAnimation->GetCurrentFrame();
 	app->render->DrawTexture(textureLeft, position.x - 20, position.y - 20, &rect);
 
 	return true;
 }
 
-bool Air_Enemy::PostUpdate() {
+void Air_Enemy::MoveAirEnemy() {
+	int mov = rand() % 4;
 
+	switch (mov) {
+	case 0:
+		pbody->body->SetLinearVelocity({ 0, -speed });
+	}
+}
+
+bool Air_Enemy::PostUpdate() {
 
 
 	return true;

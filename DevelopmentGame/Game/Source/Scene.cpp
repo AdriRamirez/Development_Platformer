@@ -175,7 +175,7 @@ bool Scene::Update(float dt)
 	
 	if (app->scene->enemyDeleted) 
 	{
-		app->scene->floor_enemy->position.y = -5000;
+		app->scene->floor_enemy->DeleteEntity();
 	}
 
 	return true;
