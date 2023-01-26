@@ -16,6 +16,7 @@ enum class EntityType
 	ITEM,
 	FLOOR_ENEMY,
 	AIR_ENEMY,
+	LIFE,
 	UNKNOWN
 };
 
@@ -92,6 +93,7 @@ public:
 	EntityType type;
 	bool active = true;
 	pugi::xml_node parameters;
+	b2Body* body;
 
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...
@@ -99,6 +101,7 @@ public:
 	bool renderable = true;
 	int p_in_array;
 	bool alive;
+
 };
 
 #endif // __ENTITY_H__

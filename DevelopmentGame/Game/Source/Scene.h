@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "Life.h"
 
 struct SDL_Texture;
 
@@ -61,6 +62,8 @@ public:
 	Floor_Enemy* floor_enemy;
 
 	Air_Enemy* air_enemy;
+
+	Life* life;
 
 	bool enemyDeleted = false;
 

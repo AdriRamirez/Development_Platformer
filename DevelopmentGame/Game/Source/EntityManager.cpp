@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "Life.h"
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -92,6 +93,10 @@ Entity* EntityManager::CreateEntity(EntityType type)
 
 	case EntityType::ITEM:
 		entity = new Item();
+		break;
+
+	case EntityType::LIFE:
+		entity = new Life();
 		break;
 
 	case EntityType::FLOOR_ENEMY:

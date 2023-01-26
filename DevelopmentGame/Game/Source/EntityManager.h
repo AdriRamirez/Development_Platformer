@@ -39,7 +39,10 @@ public:
 public:
 
 	List<Entity*> entities;
-
+	int lifes = 0;
+	char numlifes[4] = { "\0" };
+	int gold = 2;
+	char numgold[3] = { "\0" };
 
 };
 

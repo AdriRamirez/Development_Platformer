@@ -48,11 +48,16 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 	*/
 
+	//Instantiate the enemies using the entity manager
 	floor_enemy = (Floor_Enemy*)app->entityManager->CreateEntity(EntityType::FLOOR_ENEMY);
 	floor_enemy->parameters = config.child("floor_enemy");
 
 	air_enemy = (Air_Enemy*)app->entityManager->CreateEntity(EntityType::AIR_ENEMY);
 	air_enemy->parameters = config.child("air_enemy");
+
+	//Instantiate the lifes using the entity manager
+	life = (Life*)app->entityManager->CreateEntity(EntityType::LIFE);
+	life->parameters = config.child("lifes");
 	
 	return ret;
 }
@@ -261,8 +266,14 @@ bool Scene::LoadState(pugi::xml_node& data)
 	air_enemy->position.x = data.child("air_enemy").attribute("x").as_int();
 	air_enemy->position.y = data.child("air_enemy").attribute("y").as_int();
 	b2Vec2 aepos;
-	aepos.x = PIXEL_TO_METERS(floor_enemy->position.x);
-	aepos.y = PIXEL_TO_METERS(floor_enemy->position.y);
+	aepos.x = PIXEL_TO_METERS(air_enemy->position.x);
+	aepos.y = PIXEL_TO_METERS(air_enemy->position.y);
+
+	life->position.x = data.child("lifes").attribute("x").as_int();
+	life->position.y = data.child("lifes").attribute("y").as_int();
+	b2Vec2 lifepos;
+	lifepos.x = PIXEL_TO_METERS(life->position.x);
+	lifepos.y = PIXEL_TO_METERS(life->position.y);
 
 	return true;
 }
@@ -272,6 +283,7 @@ bool Scene::SaveState(pugi::xml_node& data)
 	pugi::xml_node pos = data.append_child("player");
 	pugi::xml_node fepos = data.append_child("floor_enemy");
 	pugi::xml_node aepos = data.append_child("air_enemy");
+	pugi::xml_node lifepos = data.append_child("lifes");
 
 	pos.append_attribute("x") = player->position.x;
 	pos.append_attribute("y") = player->position.y;
@@ -281,6 +293,9 @@ bool Scene::SaveState(pugi::xml_node& data)
 
 	aepos.append_attribute("x") = air_enemy->position.x;
 	aepos.append_attribute("y") = air_enemy->position.y;
+
+	lifepos.append_attribute("x") = life->position.x;
+	lifepos.append_attribute("y") = life->position.y;
 
 
 	return true;

@@ -530,6 +530,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ITEM");
 			app->audio->PlayFx(pickCoinFxId);
 			break;
+		case ColliderType::LIFE:
+			LOG("Collision LIFE");
+			app->audio->PlayFx(pickCoinFxId);
+			lifePoints = lifePoints + 75;
+			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
 			app->audio->PlayFx(landSound);
