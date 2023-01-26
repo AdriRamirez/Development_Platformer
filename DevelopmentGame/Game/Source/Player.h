@@ -73,7 +73,7 @@ public:
 	int w;
 
 	int numLives = 2;
-	int lifePoints = 100;
+	int lifePoints = 125;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction

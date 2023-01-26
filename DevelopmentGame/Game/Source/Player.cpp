@@ -469,7 +469,7 @@ bool Player::Update()
 	}
 
 	//Player death conditions
-	if (lifePoints == 0)
+	if (lifePoints < 25)
 	{
 		app->menu->dead = true;
 	}

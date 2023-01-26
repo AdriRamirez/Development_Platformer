@@ -54,6 +54,7 @@ public:
 	Player* player;
 	SDL_Texture* title_screen;
 	SDL_Texture* hud;
+	SDL_Texture* life_points_tex;
 	int current_lvl = 0;
 	float x = 50, y = 500;
 

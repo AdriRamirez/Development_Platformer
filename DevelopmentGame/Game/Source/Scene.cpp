@@ -186,8 +186,38 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
+	//HUD render
 	app->render->DrawTexture(hud, -app->render->camera.x, 0);
 
+
+	//Life points render
+	if (player->lifePoints >= 125)
+	{
+		app->render->DrawTexture(life_points_tex, -app->render->camera.x + 240, 16);
+	}
+
+	if (player->lifePoints >= 100)
+	{
+		app->render->DrawTexture(life_points_tex, -app->render->camera.x + 218, 16);
+	}
+
+	if (player->lifePoints >= 75)
+	{
+		app->render->DrawTexture(life_points_tex, -app->render->camera.x + 196, 16);
+	}
+
+	if (player->lifePoints >= 50)
+	{
+		app->render->DrawTexture(life_points_tex, -app->render->camera.x + 174, 16);
+	}
+
+	if (player->lifePoints >= 25)
+	{
+		app->render->DrawTexture(life_points_tex, -app->render->camera.x + 152, 16);
+	}
+
+
+	//Title screen render
 	if (title_screen != NULL)
 	{
 		app->render->DrawTexture(title_screen, 0, 0);
@@ -298,6 +328,7 @@ bool Scene::FadeFromBlack(int level)
 			app->map->Load();
 			app->audio->PlayMusic("Assets/Audio/Music/strike_the_earth.ogg");
 			hud = app->tex->Load("Assets/Textures/hud/hud_life_and_gold.png");
+			life_points_tex = app->tex->Load("Assets/Textures/hud/life_point.png");
 			
 			SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				app->map->mapData.width,
