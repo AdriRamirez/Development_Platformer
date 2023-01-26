@@ -185,7 +185,9 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-	
+
+	app->render->DrawTexture(hud, -app->render->camera.x, 0);
+
 	if (title_screen != NULL)
 	{
 		app->render->DrawTexture(title_screen, 0, 0);
@@ -295,6 +297,7 @@ bool Scene::FadeFromBlack(int level)
 			app->SaveGameRequest();
 			app->map->Load();
 			app->audio->PlayMusic("Assets/Audio/Music/strike_the_earth.ogg");
+			hud = app->tex->Load("Assets/Textures/hud/hud_life_and_gold.png");
 			
 			SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				app->map->mapData.width,

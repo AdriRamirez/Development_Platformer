@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="200" height="18" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="200" height="18" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="1">
  <tileset firstgid="1" name="plains" tilewidth="32" tileheight="32" tilecount="425" columns="25">
   <image source="plains.png" width="800" height="544"/>
  </tileset>
@@ -13,32 +13,32 @@
    <property name="parallax_value" type="float" value="1"/>
   </properties>
   <data>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
-   <tile gid="12"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
+   <tile gid="298"/>
    <tile gid="12"/>
    <tile gid="12"/>
    <tile gid="12"/>
