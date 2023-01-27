@@ -108,9 +108,11 @@ bool Life::DeleteEntity()
 	app->entityManager->lifes++;
 	sprintf_s(app->entityManager->numlifes, 4, "%03d", app->entityManager->lifes);
 	picked = true;
-	position.x = body->GetPosition().x;
-	position.y = body->GetPosition().y;
-	plan_to_delete = true;
+	//position.x = body->GetPosition().x;
+	//position.y = body->GetPosition().y;
+	//plan_to_delete = true;
+	app->physics->world->DestroyBody(body);
+	pbody->body->SetActive(false);
 
 	return true;
 }

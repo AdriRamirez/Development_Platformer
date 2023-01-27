@@ -60,6 +60,7 @@ private:
 	bool rollin = false;
 	bool dive = false;
 	bool hit = false;
+	bool lifePicked = false;
 
 	float jumpForce = 20.0f;
 

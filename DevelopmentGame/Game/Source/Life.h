@@ -15,6 +15,8 @@ public:
 
 	virtual ~Life();
 
+	bool DeleteEntity();
+
 private:
 
 	void InitCustomEntity();
@@ -28,8 +30,6 @@ private:
 	bool Update();
 
 	bool Draw();
-
-	bool DeleteEntity();
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);

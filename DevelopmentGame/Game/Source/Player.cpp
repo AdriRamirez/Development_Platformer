@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Menu.h"
 #include "EntityManager.h"
+#include "Life.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -473,6 +474,13 @@ bool Player::Update()
 	{
 		app->menu->dead = true;
 	}
+
+	//Player life limit
+	if (lifePoints > 125)
+	{
+		lifePoints = 125;
+	}
+
 	
 	//Player hit event
 	if (hit)
@@ -532,8 +540,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::LIFE:
 			LOG("Collision LIFE");
-			app->audio->PlayFx(pickCoinFxId);
-			lifePoints = lifePoints + 75;
+			if (!lifePicked)
+			{
+				app->audio->PlayFx(pickCoinFxId);
+				lifePoints = lifePoints + 75;
+				app->scene->life->DeleteEntity();
+				lifePicked = true;
+			}
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
@@ -552,8 +565,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				pbody->body->SetLinearVelocity(b2Vec2(pbody->body->GetLinearVelocity().x, -8));
 				dive = false;
 				app->scene->enemyDeleted = true;
-				app->entityManager->DestroyEntity(app->scene->floor_enemy);
-				
+				app->scene->floor_enemy->DeleteEntity();
 			}
 			else
 			{
@@ -567,6 +579,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				dive = false;
 				app->scene->enemyDeleted = true;
 				app->entityManager->DestroyEntity(app->scene->air_enemy);
+				app->scene->air_enemy->DeleteEntity();
 			}
 			else
 			{

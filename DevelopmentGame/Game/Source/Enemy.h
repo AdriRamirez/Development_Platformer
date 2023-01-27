@@ -112,6 +112,9 @@ public:
 
 	void MoveAirEnemy();
 	void CheckAirEnemy();
+
+	bool DeleteEntity();
+
 	// load-save
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
@@ -127,6 +130,8 @@ public:
 	// A set of animations
 	Animation flyAnimR;
 	Animation flyAnimL;
+
+	bool delete_air_enemy;
 
 	ENEMY_STATE state;
 

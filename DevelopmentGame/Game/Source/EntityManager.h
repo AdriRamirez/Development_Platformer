@@ -35,6 +35,9 @@ public:
 	void DestroyEntity(Entity* entity);
 	void KillEnemy(fPoint pos);
 	void AddEntity(Entity* entity);
+
+	void PickLife(fPoint pos);
+
 	Entity* GetPlayer();
 public:
 

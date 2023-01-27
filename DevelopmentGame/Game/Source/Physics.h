@@ -20,7 +20,8 @@
 enum bodyType {
 	DYNAMIC,
 	STATIC,
-	KINEMATIC
+	KINEMATIC,
+	NONE
 };
 
 enum class ColliderType {

@@ -167,6 +167,24 @@ bool EntityManager::Update(float dt)
 	return ret;
 }
 
+void EntityManager::PickLife(fPoint pos)
+{
+	ListItem<Entity*>* item;
+	Entity* entity = NULL;
+
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		entity = item->data;
+
+		if (pos.x + 1.5f > entity->position.x && pos.x - 1.5f < entity->position.x && pos.y + 2.0f > entity->position.y && pos.y - 2.0f < entity->position.y && entity->type == EntityType::LIFE)
+		{
+			entity->DeleteEntity();
+
+			break;
+		}
+	}
+}
+
 bool EntityManager::PreUpdate()
 {
 	bool ret = true;

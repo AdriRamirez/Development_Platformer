@@ -206,6 +206,7 @@ bool Floor_Enemy::DeleteEntity()
 {
 	state = ENEMY_STATE::DEATH;
 	delete_enemy = true;
+	pbody->body->SetActive(false);
 
 	return true;
 }
@@ -499,6 +500,15 @@ void Air_Enemy::CheckAirEnemy()
 			break;
 		}
 	}
+}
+
+bool Air_Enemy::DeleteEntity()
+{
+	state = ENEMY_STATE::DEATH;
+	delete_air_enemy = true;
+	pbody->body->SetActive(false);
+
+	return true;
 }
 
 bool Air_Enemy::PostUpdate() {
