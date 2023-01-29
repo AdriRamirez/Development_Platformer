@@ -57,8 +57,51 @@ bool Scene::Awake(pugi::xml_node& config)
 	life_2 = (Life*)app->entityManager->CreateEntity(EntityType::LIFE);
 	life_2->parameters = config.child("lifes_2");
 
+	//Instantiate the gems using the entity manager
 	gem_1 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
 	gem_1->parameters = config.child("gems_1");
+
+	gem_2 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_2->parameters = config.child("gems_2");
+
+	gem_3 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_3->parameters = config.child("gems_3");
+
+	gem_4 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_4->parameters = config.child("gems_4");
+
+	gem_5 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_5->parameters = config.child("gems_5");
+
+	gem_6 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_6->parameters = config.child("gems_6");
+
+	gem_7 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_7->parameters = config.child("gems_7");
+
+	gem_8 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_8->parameters = config.child("gems_8");
+
+	gem_9 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_9->parameters = config.child("gems_9");
+
+	gem_10 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_10->parameters = config.child("gems_10");
+
+	gem_11 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_11->parameters = config.child("gems_11");
+
+	gem_12 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_12->parameters = config.child("gems_12");
+
+	gem_13 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_13->parameters = config.child("gems_13");
+
+	gem_14 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_14->parameters = config.child("gems_14");
+
+	gem_15 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_15->parameters = config.child("gems_15");
 	
 	return ret;
 }
@@ -123,7 +166,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	
+
 	if (a >= 255)
 	{
 		go_black = false;
@@ -194,7 +237,7 @@ bool Scene::PostUpdate()
 
 	//HUD render
 	app->render->DrawTexture(hud, -app->render->camera.x, 0);
-
+	FontDrawScore(score, 4, posicioFont + -app->render->camera.x , posicioFontY, 10, 1);
 
 	//Life points render
 	if (player->lifePoints >= 125)
@@ -362,6 +405,7 @@ bool Scene::FadeFromBlack(int level)
 			app->audio->PlayMusic("Assets/Audio/Music/strike_the_earth.ogg");
 			hud = app->tex->Load("Assets/Textures/hud/hud_life_and_gold.png");
 			life_points_tex = app->tex->Load("Assets/Textures/hud/life_point.png");
+			font = app->tex->Load("Assets/Textures/hud/fonts.png");
 			
 			SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				app->map->mapData.width,
@@ -379,4 +423,64 @@ bool Scene::FadeFromBlack(int level)
 	}
 
 	return true;
+}
+
+void Scene::FontDrawScore(int score, int n, int posX, int posY, int separacio, float scale) {
+	int initialPosX = posX;
+	int scoreCopia = score;
+	int scoreArray[4];
+	for (int j = 0; j < n; ++j) {
+		scoreArray[j] = scoreCopia % 10;
+		scoreCopia /= 10;
+	}
+
+	SDL_Rect rect0 = { 10 * 0, 0, 10, 10 };
+	SDL_Rect rect1 = { 10 * 1, 0, 10, 10 };
+	SDL_Rect rect2 = { 10 * 2, 0, 10, 10 };
+	SDL_Rect rect3 = { 10 * 3, 0, 10, 10 };
+	SDL_Rect rect4 = { 10 * 4, 0, 10, 10 };
+	SDL_Rect rect5 = { 10 * 5, 0, 10, 10 };
+	SDL_Rect rect6 = { 10 * 6, 0, 10, 10 };
+	SDL_Rect rect7 = { 10 * 7, 0, 10, 10 };
+	SDL_Rect rect8 = { 10 * 8, 0, 10, 10 };
+	SDL_Rect rect9 = { 10 * 9, 0, 10, 10 };
+
+	for (int k = 0; k < n; ++k) {
+
+		switch (scoreArray[k]) {
+		case 0:
+			app->render->Blit(font, posX, posY, &rect0, scale);
+			break;
+		case 1:
+			app->render->Blit(font, posX, posY, &rect1, scale);
+			break;
+		case 2:
+			app->render->Blit(font, posX, posY, &rect2, scale);
+			break;
+		case 3:
+			app->render->Blit(font, posX, posY, &rect3, scale);
+			break;
+		case 4:
+			app->render->Blit(font, posX, posY, &rect4, scale);
+			break;
+		case 5:
+			app->render->Blit(font, posX, posY, &rect5, scale);
+			break;
+		case 6:
+			app->render->Blit(font, posX, posY, &rect6, scale);
+			break;
+		case 7:
+			app->render->Blit(font, posX, posY, &rect7, scale);
+			break;
+		case 8:
+			app->render->Blit(font, posX, posY, &rect8, scale);
+			break;
+		case 9:
+			app->render->Blit(font, posX, posY, &rect9, scale);
+			break;
+		}
+
+		posX -= separacio;
+	}
+	posX = initialPosX;
 }

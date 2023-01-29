@@ -65,6 +65,20 @@ private:
 	bool lifePicked = false;
 	bool lifePicked_2 = false;
 	bool gem_1_Picked = false;
+	bool gem_2_Picked = false;
+	bool gem_3_Picked = false;
+	bool gem_4_Picked = false;
+	bool gem_5_Picked = false;
+	bool gem_6_Picked = false;
+	bool gem_7_Picked = false;
+	bool gem_8_Picked = false;
+	bool gem_9_Picked = false;
+	bool gem_10_Picked = false;
+	bool gem_11_Picked = false;
+	bool gem_12_Picked = false;
+	bool gem_13_Picked = false;
+	bool gem_14_Picked = false;
+	bool gem_15_Picked = false;
 
 	float jumpForce = 20.0f;
 
@@ -73,6 +87,7 @@ private:
 	int foodSound;
 	int gemSound;
 	int enemySound;
+	int diamondSound;
 	fPoint GetPlayerPosition();
 
 public:
@@ -83,7 +98,6 @@ public:
 
 	int numLives = 2;
 	int lifePoints = 125;
-	int points = 0;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction

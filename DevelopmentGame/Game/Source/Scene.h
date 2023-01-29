@@ -48,6 +48,8 @@ public:
 	bool FadeToBlack(int level);
 	bool ReturnStartScreen();
 
+	void FontDrawScore(int score, int n, int posX, int posY, int separacio, float scale);
+
 	bool godMode=false;
 
 public:
@@ -68,8 +70,30 @@ public:
 	Life* life_2;
 
 	Gem* gem_1;
+	Gem* gem_2;
+	Gem* gem_3;
+	Gem* gem_4;
+	Gem* gem_5;
+	Gem* gem_6;
+	Gem* gem_7;
+	Gem* gem_8;
+	Gem* gem_9;
+	Gem* gem_10;
+	Gem* gem_11;
+	Gem* gem_12;
+	Gem* gem_13;
+	Gem* gem_14;
+	Gem* gem_15;
+
+
+	SDL_Texture* font;
 
 	bool enemyDeleted = false;
+
+	//Score
+	int score = 000;
+	int posicioFont = 60;
+	int posicioFontY = 18;
 
 private:
 	SDL_Rect r;

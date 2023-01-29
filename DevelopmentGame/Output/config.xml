@@ -46,9 +46,53 @@
 	  
 	 <lifes_2 x="2380" y="496"
 			  texturepath ="Assets/Textures/items/chicken.png"/>
-
-	  <gems_1 x="200" y="496"
+	  
+	  
+	  <gems_1 x="1136" y="288"
 			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_2 x="1264" y="288"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_3 x="2320" y="320"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_4 x="2432" y="320"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_5 x="3472" y="448"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_6 x="3600" y="448"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_7 x="5040" y="448"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	  
+	  <gems_8 x="5168" y="448"
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
+	    
+	  <gems_9 x="1200" y="288"
+			texturepath ="Assets/Textures/items/gem_3.png"/>
+	  
+	  <gems_10 x="2384" y="320"
+			 texturepath ="Assets/Textures/items/gem_4.png"/>
+
+	  <gems_11 x="3536" y="448"
+			 texturepath ="Assets/Textures/items/gem_5.png"/>
+
+	  <gems_12 x="5104" y="448"
+			 texturepath ="Assets/Textures/items/gem_6.png"/>
+
+	  <gems_13 x="2800" y="448"
+			 texturepath ="Assets/Textures/items/gem_7.png"/>
+
+	  <gems_14 x="3312" y="160"
+			 texturepath ="Assets/Textures/items/gem_7.png"/>
+
+	  <gems_15 x="6032" y="224"
+			 texturepath ="Assets/Textures/items/gem_7.png"/>
+	    
 	  
 	<!--item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>

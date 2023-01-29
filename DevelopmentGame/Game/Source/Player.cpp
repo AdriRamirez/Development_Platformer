@@ -172,6 +172,7 @@ bool Player::Start() {
 	foodSound = app->audio->LoadFx("Assets/Audio/Fx/food.ogg");
 	gemSound = app->audio->LoadFx("Assets/Audio/Fx/gem_01.ogg");
 	enemySound = app->audio->LoadFx("Assets/Audio/Fx/character_poof_01.ogg");
+	diamondSound = app->audio->LoadFx("Assets/Audio/Fx/diamond.ogg");
 
 	inAir = false; //Check if player is on the ground or not
 
@@ -555,9 +556,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					lifePicked = true;
 				}
 			}	
-			else if (!lifePicked_2)
+			if (!lifePicked_2)
 			{
-				if (app->scene->player->position.x > 2200 && app->scene->player->position.x < 2500)
+				if (app->scene->player->position.x > 2180 && app->scene->player->position.x < 2580)
 				{
 					app->audio->PlayFx(foodSound);
 					lifePoints = lifePoints + 25;
@@ -569,12 +570,156 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::GEM:
 			LOG("Collision GEM");
 			if (!gem_1_Picked)
-			{	
+			{
+				if (app->scene->player->position.x > 1036 && app->scene->player->position.x < 1236)
+				{
 					app->audio->PlayFx(gemSound);
 					app->scene->gem_1->DeleteEntity();
-					points = points + 100;
+					app->scene->score = app->scene->score + 100;
 					gem_1_Picked = true;
+				}
 			}
+			if (!gem_2_Picked)
+			{
+				if (app->scene->player->position.x > 1164 && app->scene->player->position.x < 1364)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_2->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_2_Picked = true;
+				}
+			}
+			if (!gem_3_Picked)
+			{
+				if (app->scene->player->position.x > 2220 && app->scene->player->position.x < 2420)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_3->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_3_Picked = true;
+				}
+			}
+			if (!gem_4_Picked)
+			{
+				if (app->scene->player->position.x > 2332 && app->scene->player->position.x < 2532)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_4->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_4_Picked = true;
+				}
+			}
+			if (!gem_5_Picked)
+			{
+				if (app->scene->player->position.x > 3372 && app->scene->player->position.x < 3572)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_5->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_5_Picked = true;
+				}
+			}
+			if (!gem_6_Picked)
+			{
+				if (app->scene->player->position.x > 3500 && app->scene->player->position.x < 3700)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_6->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_6_Picked = true;
+				}
+			}
+			if (!gem_7_Picked)
+			{
+				if (app->scene->player->position.x > 4940 && app->scene->player->position.x < 5140)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_7->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_7_Picked = true;
+				}
+			}
+			if (!gem_8_Picked)
+			{
+				if (app->scene->player->position.x > 5068 && app->scene->player->position.x < 5298)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_8->DeleteEntity();
+					app->scene->score = app->scene->score + 100;
+					gem_8_Picked = true;
+				}
+			}
+			if (!gem_9_Picked)
+			{
+				if (app->scene->player->position.x > 1100 && app->scene->player->position.x < 1300)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_9->DeleteEntity();
+					app->scene->score = app->scene->score + 200;
+					gem_9_Picked = true;
+				}
+			}
+			if (!gem_10_Picked)
+			{
+				if (app->scene->player->position.x > 2284 && app->scene->player->position.x < 2484)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_10->DeleteEntity();
+					app->scene->score = app->scene->score + 300;
+					gem_10_Picked = true;
+				}
+			}
+			if (!gem_11_Picked)
+			{
+				if (app->scene->player->position.x > 3436 && app->scene->player->position.x < 3636)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_11->DeleteEntity();
+					app->scene->score = app->scene->score + 400;
+					gem_11_Picked = true;
+				}
+			}
+			if (!gem_12_Picked)
+			{
+				if (app->scene->player->position.x > 5004 && app->scene->player->position.x < 5204)
+				{
+					app->audio->PlayFx(gemSound);
+					app->scene->gem_12->DeleteEntity();
+					app->scene->score = app->scene->score + 500;
+					gem_12_Picked = true;
+				}
+			}
+			if (!gem_13_Picked)
+			{
+				if (app->scene->player->position.x > 2700 && app->scene->player->position.x < 2900)
+				{
+					app->audio->PlayFx(diamondSound);
+					app->scene->gem_13->DeleteEntity();
+					app->scene->score = app->scene->score + 1000;
+					gem_13_Picked = true;
+				}
+			}
+			if (!gem_14_Picked)
+			{
+				if (app->scene->player->position.x > 3212 && app->scene->player->position.x < 3412)
+				{
+					app->audio->PlayFx(diamondSound);
+					app->scene->gem_14->DeleteEntity();
+					app->scene->score = app->scene->score + 1000;
+					gem_14_Picked = true;
+				}
+			}
+			if (!gem_15_Picked)
+			{
+				if (app->scene->player->position.x > 5932 && app->scene->player->position.x < 6132)
+				{
+					app->audio->PlayFx(diamondSound);
+					app->scene->gem_15->DeleteEntity();
+					app->scene->score = app->scene->score + 1000;
+					gem_15_Picked = true;
+				}
+			}
+
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
