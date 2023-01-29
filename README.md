@@ -13,7 +13,12 @@ Dive Attack
 Pause & Death Menu         
 Debugging functions         
 Floor Enemy         
-Air Enemy         
+Air Enemy
+Checkpoints
+Collectibles
+HUD
+Optimization
+
 
 ## Controls
 
