@@ -73,7 +73,7 @@ bool Life::PreUpdate()
 }
 
 // Called each loop iteration
-bool Life::Update()
+bool Life::Update(float dt)
 {
 	currentLifeAnim->Update();
 

@@ -189,12 +189,12 @@ bool Player::PreUpdate()
 	return true;
 }
 
-bool Player::Update()
+bool Player::Update(float dt)
 {
 
 	// Add physics to the player - updated player position using physics
 
-	float speed = 3.5f;
+	float speed = 0.22f*dt;
 
 	//Move left
 	if (!app->menu->GetGameState()) {
@@ -203,7 +203,7 @@ bool Player::Update()
 			if (!app->scene->godMode)
 				pbody->body->SetLinearVelocity(b2Vec2(-speed, pbody->body->GetLinearVelocity().y));
 			else if (app->scene->godMode && !app->menu->GetGameState())
-				position.x -= 10;
+				position.x -= 0.6f*dt;
 
 			lookLeft = true;
 
@@ -234,7 +234,7 @@ bool Player::Update()
 			if (!app->scene->godMode)
 				pbody->body->SetLinearVelocity(b2Vec2(speed, pbody->body->GetLinearVelocity().y));
 			else if (app->scene->godMode && !app->menu->GetGameState())
-				position.x += 10;
+				position.x += 0.6f * dt;
 
 			lookLeft = false;
 
@@ -261,7 +261,7 @@ bool Player::Update()
 	if (app->scene->godMode && !app->menu->GetGameState()) {
 		//Move Up
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			position.y -= 10;
+			position.y -= 0.6f * dt;
 
 			lookLeft = false;
 
@@ -273,7 +273,7 @@ bool Player::Update()
 		}
 		//Move Down
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			position.y += 10;
+			position.y += 0.6f * dt;
 
 			lookLeft = false;
 
@@ -543,6 +543,24 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ITEM:
 			LOG("Collision ITEM");
 			app->audio->PlayFx(pickCoinFxId);
+			break;
+		case ColliderType:: CHECKPOINT:
+			if(!check1)
+			{
+				if (app->scene->player->position.x > 2000 && app->scene->player->position.x < 2200) {
+					app->scene->checkpoint_1->DeleteEntity();
+					app->SaveGameRequest();
+					check1 = true;
+				}
+			}
+			if (!check2)
+			{
+				if (app->scene->player->position.x > 3700 && app->scene->player->position.x < 3900) {
+					app->scene->checkpoint_2->DeleteEntity();
+					app->SaveGameRequest();
+					check2 = true;
+				}
+			}
 			break;
 		case ColliderType::LIFE:
 			LOG("Collision LIFE");

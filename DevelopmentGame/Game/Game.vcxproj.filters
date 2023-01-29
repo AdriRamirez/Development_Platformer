@@ -25,6 +25,9 @@
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Life.cpp" />
     <ClCompile Include="Source\Gem.cpp" />
+    <ClCompile Include="Source\PerfTimer.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Checkpoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -76,6 +79,9 @@
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Life.h" />
     <ClInclude Include="Source\Gem.h" />
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Checkpoint.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

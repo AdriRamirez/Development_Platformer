@@ -96,7 +96,7 @@ bool Floor_Enemy::PreUpdate() {
 	return true;
 }
 
-bool Floor_Enemy::Update()
+bool Floor_Enemy::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -348,7 +348,7 @@ bool Air_Enemy::Start() {
 	return true;
 }
 
-bool Air_Enemy::Update()
+bool Air_Enemy::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;

@@ -27,7 +27,7 @@ private:
 
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool Draw();
 

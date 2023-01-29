@@ -22,7 +22,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool PostUpdate();
 
@@ -62,6 +62,8 @@ private:
 	bool rollin = false;
 	bool dive = false;
 	bool hit = false;
+	bool check1 = false;
+	bool check2 = false;
 	bool lifePicked = false;
 	bool lifePicked_2 = false;
 	bool gem_1_Picked = false;

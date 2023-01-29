@@ -103,6 +103,15 @@ bool Scene::Awake(pugi::xml_node& config)
 	gem_15 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
 	gem_15->parameters = config.child("gems_15");
 	
+
+	//Instantiate the checkpoints using the entity manager
+	checkpoint_1 = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
+	checkpoint_1->parameters = config.child("checkpoint_1");
+
+	checkpoint_2 = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
+	checkpoint_2->parameters = config.child("checkpoint_2");
+
+
 	return ret;
 }
 
@@ -134,8 +143,8 @@ bool Scene::PreUpdate()
 	if (title_screen != NULL && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		//NextLevel(1);
-		destination_level = 1;
-		go_black = true;
+		//destination_level = 1;
+		//go_black = true;
 	}
 
 	if (go_black)
@@ -185,7 +194,8 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN){
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) 
+	{
 		godMode = !godMode;
 		if (!godMode) {
 			b2Vec2 pos;
@@ -194,13 +204,13 @@ bool Scene::Update(float dt)
 			player->pbody->body->SetTransform(pos, player->pbody->body->GetAngle());
 		}
 	}
-		
+
 	if (godMode) {
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			app->render->camera.y += 10;
+			app->render->camera.y += 0.6f*dt;
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-			app->render->camera.y -= 10;
+			app->render->camera.y -= 0.6f*dt;
 
 	}
 	
@@ -331,6 +341,18 @@ bool Scene::LoadState(pugi::xml_node& data)
 	gem1pos.x = PIXEL_TO_METERS(gem_1->position.x);
 	gem1pos.y = PIXEL_TO_METERS(gem_1->position.y);
 
+	checkpoint_1->position.x = data.child("checkpoint_1").attribute("x").as_int();
+	checkpoint_1->position.y = data.child("checkpoint_1").attribute("y").as_int();
+	checkpoint1pos;
+	checkpoint1pos.x = PIXEL_TO_METERS(checkpoint_1->position.x);
+	checkpoint1pos.y = PIXEL_TO_METERS(checkpoint_1->position.y);
+
+	checkpoint_2->position.x = data.child("checkpoint_2").attribute("x").as_int();
+	checkpoint_2->position.y = data.child("checkpoint_2").attribute("y").as_int();
+	checkpoint2pos;
+	checkpoint2pos.x = PIXEL_TO_METERS(checkpoint_2->position.x);
+	checkpoint2pos.y = PIXEL_TO_METERS(checkpoint_2->position.y);
+
 	return true;
 }
 
@@ -370,6 +392,24 @@ bool Scene::CleanUp()
 	return true;
 }
 
+bool Scene::GetStartScreenState()
+{
+	if (title_screen != NULL)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Scene::QuitStartScreen()
+{
+	title_screen = NULL;
+
+	return true;
+}
 
 bool Scene::ReturnStartScreen()
 {

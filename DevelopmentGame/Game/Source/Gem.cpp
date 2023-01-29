@@ -71,7 +71,7 @@ bool Gem::PreUpdate()
 }
 
 // Called each loop iteration
-bool Gem::Update()
+bool Gem::Update(float dt)
 {
 	currentGemAnim->Update();
 

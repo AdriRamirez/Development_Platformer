@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "Life.h"
 #include "Gem.h"
+#include "Checkpoint.h"
 
 struct SDL_Texture;
 
@@ -47,6 +48,8 @@ public:
 	bool FadeFromBlack(int level);
 	bool FadeToBlack(int level);
 	bool ReturnStartScreen();
+	bool GetStartScreenState();
+	bool QuitStartScreen();
 
 	void FontDrawScore(int score, int n, int posX, int posY, int separacio, float scale);
 
@@ -58,6 +61,7 @@ public:
 	Player* player;
 	SDL_Texture* title_screen;
 	SDL_Texture* hud;
+	SDL_Texture* checkpoint;
 	SDL_Texture* life_points_tex;
 	int current_lvl = 0;
 	float x = 50, y = 500;
@@ -85,6 +89,10 @@ public:
 	Gem* gem_14;
 	Gem* gem_15;
 
+	Checkpoint* checkpoint_1;
+	Checkpoint* checkpoint_2;
+	b2Vec2 checkpoint1pos;
+	b2Vec2 checkpoint2pos;
 
 	SDL_Texture* font;
 
@@ -95,15 +103,17 @@ public:
 	int posicioFont = 60;
 	int posicioFontY = 18;
 
+	int destination_level = -1;
+	bool go_black = false;
 private:
 	SDL_Rect r;
 	Uint8 a;
 
-	bool go_black = false;
+	
 	bool return_black = false;
 	int fade_speed = 2;
 
-	int destination_level = -1;
+	
 	pugi::xml_node node;
 };
 

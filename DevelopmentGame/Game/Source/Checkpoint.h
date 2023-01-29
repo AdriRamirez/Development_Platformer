@@ -1,5 +1,5 @@
-#ifndef __ITEM_H__
-#define __ITEM_H__
+#ifndef __CHECKPOINT_H__
+#define __CHECKPOINT_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -7,18 +7,20 @@
 
 struct SDL_Texture;
 
-class Item : public Entity
+class Checkpoint : public Entity
 {
 public:
 
-	Item();
-	virtual ~Item();
+	Checkpoint();
+	virtual ~Checkpoint();
 
 	bool Awake();
 
 	bool Start();
 
 	bool Update(float dt);
+
+	bool DeleteEntity();
 
 	bool CleanUp();
 
@@ -35,4 +37,4 @@ private:
 	PhysBody* pbody;
 };
 
-#endif // __ITEM_H__
+#endif // __CHECKPOINT_H__

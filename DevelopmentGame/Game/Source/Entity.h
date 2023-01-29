@@ -18,6 +18,7 @@ enum class EntityType
 	AIR_ENEMY,
 	LIFE,
 	GEM,
+	CHECKPOINT,
 	UNKNOWN
 };
 
@@ -37,7 +38,7 @@ public:
 		return true;
 	}
 
-	virtual bool Update()
+	virtual bool Update(float dt)
 	{
 		return true;
 	}

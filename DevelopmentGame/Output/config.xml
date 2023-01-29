@@ -2,6 +2,7 @@
   <app>
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
+    <frcap value = "16"/>
   </app>
 
   <renderer>
@@ -92,7 +93,12 @@
 
 	  <gems_15 x="6032" y="224"
 			 texturepath ="Assets/Textures/items/gem_7.png"/>
-	    
+
+    <checkpoint_1 x="2100" y="410"
+			 texturepath ="Assets/Textures/items/checkpoint.png"/>
+    
+    <checkpoint_2 x="3776" y="124"
+      texturepath ="Assets/Textures/items/checkpoint.png"/>
 	  
 	<!--item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>

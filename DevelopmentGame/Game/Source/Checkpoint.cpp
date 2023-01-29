@@ -1,4 +1,4 @@
-#include "Item.h"
+#include "Checkpoint.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -9,14 +9,14 @@
 #include "Point.h"
 #include "Physics.h"
 
-Item::Item() : Entity(EntityType::ITEM)
+Checkpoint::Checkpoint() : Entity(EntityType::CHECKPOINT)
 {
-	name.Create("item");
+	name.Create("checkpoint");
 }
 
-Item::~Item() {}
+Checkpoint::~Checkpoint() {}
 
-bool Item::Awake() {
+bool Checkpoint::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -25,32 +25,39 @@ bool Item::Awake() {
 	return true;
 }
 
-bool Item::Start() {
+bool Checkpoint::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	
+
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateRectangle(position.x, position.y, 30, 60, bodyType::KINEMATIC);
 
 	// L07 DONE 7: Assign collider type
-	pbody->ctype = ColliderType::ITEM;
+	pbody->ctype = ColliderType::CHECKPOINT;
 
 	return true;
 }
 
-bool Item::Update(float dt)
+bool Checkpoint::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 10;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 10;
 
 	app->render->DrawTexture(texture, position.x, position.y);
 
 	return true;
 }
 
-bool Item::CleanUp()
+bool Checkpoint::DeleteEntity()
+{
+	//app->physics->world->DestroyBody(body);
+	pbody->body->SetActive(false);
+
+	return true;
+}
+bool Checkpoint::CleanUp()
 {
 	return true;
 }
