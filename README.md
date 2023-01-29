@@ -14,10 +14,10 @@ Pause & Death Menu
 Debugging functions         
 Floor Enemy         
 Air Enemy
-Checkpoints
-Collectibles
-HUD
-Optimization
+Checkpoints         
+Collectibles         
+HUD         
+Optimization         
 
 
 ## Controls
