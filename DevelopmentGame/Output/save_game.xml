@@ -7,9 +7,9 @@
 	<pathfinding />
 	<:anonymous />
 	<scene>
-		<player x="0" y="447" />
-		<floor_enemy x="543" y="484" />
-		<air_enemy x="373" y="248" />
+		<player x="3776" y="35" />
+		<floor_enemy x="316" y="484" />
+		<air_enemy x="349" y="284" />
 		<lifes x="1184" y="480" />
 		<lifes_2 x="2364" y="480" />
 		<gems_1 />
@@ -18,6 +18,6 @@
 	<map />
 	<menu />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-3375" y="0" />
 	</renderer>
 </save_state>

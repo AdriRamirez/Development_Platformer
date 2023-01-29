@@ -237,6 +237,7 @@ bool Scene::Update(float dt)
 		app->scene->floor_enemy->DeleteEntity();
 	}
 
+
 	return true;
 }
 

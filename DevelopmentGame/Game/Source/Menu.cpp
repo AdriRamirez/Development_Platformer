@@ -43,8 +43,6 @@ bool Menu::Start()
 	menu_buttons[0].state = 1;
 	settings_buttons[0].state = 1;
 	chosed = 0;
-	chosed_menu = 0;
-	chosed_settings = 0;
 
 	app->win->GetWindowSize(win_w, win_h);
 
@@ -265,7 +263,7 @@ bool Menu::PreUpdate()
 bool Menu::Update(float dt)
 {
 	// pause buttons
-	if (paused && !loading && !dead && !intro && !settings)
+	if (paused && !intro && !settings)
 	{
 		if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == SDL_PRESSED && pause_buttons[chosed].state == 1)
 		{

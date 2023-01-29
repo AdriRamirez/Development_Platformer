@@ -53,8 +53,6 @@ private:
 	bool slider2;
 
 	int chosed;
-	int chosed_menu;
-	int chosed_settings;
 	Button pause_buttons[NUM_PAUSE_BUTTONS];
 	Button dead_buttons[NUM_DEAD_BUTTONS];
 	Button menu_buttons[NUM_MENU_BUTTONS];

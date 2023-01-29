@@ -555,7 +555,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 			if (!check2)
 			{
-				if (app->scene->player->position.x > 3700 && app->scene->player->position.x < 3900) {
+				if (app->scene->player->position.x > 3600 && app->scene->player->position.x < 3900) {
 					app->scene->checkpoint_2->DeleteEntity();
 					app->SaveGameRequest();
 					check2 = true;

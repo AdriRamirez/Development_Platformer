@@ -52,7 +52,7 @@ bool Checkpoint::Update(float dt)
 
 bool Checkpoint::DeleteEntity()
 {
-	//app->physics->world->DestroyBody(body);
+	
 	pbody->body->SetActive(false);
 
 	return true;
