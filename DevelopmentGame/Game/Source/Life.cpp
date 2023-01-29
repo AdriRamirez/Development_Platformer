@@ -9,6 +9,7 @@
 Life::Life() : Entity(EntityType::LIFE)
 {
 	name.Create("lifes");
+	name.Create("lifes_2");
 
 	chicken.PushBack({ 0, 0, 54, 36 });
 	chicken.speed = 0.1f;
@@ -76,6 +77,9 @@ bool Life::Update()
 {
 	currentLifeAnim->Update();
 
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
 	Draw();
 
 	return true;
@@ -97,7 +101,7 @@ bool Life::Draw()
 	if (!picked)
 	{
 		SDL_Rect rect = currentLifeAnim->GetCurrentFrame();
-		app->render->DrawTexture(lifeTexture, position.x + 288, position.y + 468, &rect);
+		app->render->DrawTexture(lifeTexture, position.x - 5, position.y - 2, &rect);
 	}
 
 	return ret;
@@ -137,6 +141,18 @@ bool Life::Load(pugi::xml_node& data)
 		picked = true;
 	}
 
+	if (data.child("lifes_2").child(c).attribute("state").as_int() == 0)
+	{
+		if (picked)
+		{
+			ReloadLife();
+			app->entityManager->lifes--;
+		}
+	}
+	else
+	{
+		picked = true;
+	}
 	return true;
 }
 
@@ -154,6 +170,15 @@ bool Life::Save(pugi::xml_node& data)
 	else
 	{
 		data.child("lifes").child(c).attribute("state").set_value("1");
+	}
+
+	if (!picked)
+	{
+		data.child("lifes_2").child(c).attribute("state").set_value("0");
+	}
+	else
+	{
+		data.child("lifes_2").child(c).attribute("state").set_value("1");
 	}
 
 	return true;

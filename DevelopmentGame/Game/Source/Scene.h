@@ -65,6 +65,8 @@ public:
 
 	Life* life;
 
+	Life* life_2;
+
 	bool enemyDeleted = false;
 
 private:

@@ -10,7 +10,8 @@
 		<player x="34" y="484" />
 		<floor_enemy x="384" y="484" />
 		<air_enemy x="484" y="284" />
-		<lifes x="6.39999962" y="9.92000008" />
+		<lifes x="1184" y="480" />
+		<lifes_2 x="2364" y="480" />
 	</scene>
 	<entitymanager />
 	<map />

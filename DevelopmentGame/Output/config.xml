@@ -41,7 +41,10 @@
 			  texRight = "Assets/Textures/enemies/divedrake_right_animations.png"
 			  texLeft = "Assets/Textures/enemies/divedrake_left_animations.png"/>
 
-	  <lifes x="320" y="496"
+	 <lifes x="1200" y="496"
+			  texturepath ="Assets/Textures/items/chicken.png"/>
+	  
+	 <lifes_2 x="2380" y="496"
 			  texturepath ="Assets/Textures/items/chicken.png"/>
 	  
 	<!--item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
