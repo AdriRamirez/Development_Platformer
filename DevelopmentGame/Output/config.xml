@@ -23,14 +23,15 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-	<player x="50" y="500"
-			texturepath ="Assets/Textures/knight/shovelknight.png"
-	        texRight = "Assets/Textures/knight/right_animations.png"
-	        texLeft = "Assets/Textures/knight/left_animations.png"
-	        jumpFx = "Assets/Audio/Sound Effects/knight_jump.ogg"
-			landFx = "Assets/Audio/Sound Effects/knight_land.ogg"/>
-	  
-	 <floor_enemy x="400" y="500"
+	  <player x="50" y="500"
+			  texturepath ="Assets/Textures/knight/shovelknight.png"
+			  texRight = "Assets/Textures/knight/right_animations.png"
+			  texLeft = "Assets/Textures/knight/left_animations.png"
+			  jumpFx = "Assets/Audio/Sound Effects/knight_jump.ogg"
+			  landFx = "Assets/Audio/Sound Effects/knight_land.ogg"
+			  hitFx =  "Assets/Audio/Sound Effects/knight_hurt.ogg"/>
+
+	  <floor_enemy x="400" y="500"
 		    texturepath ="Assets/Textures/enemies/beeto.png"
 	        texRight = "Assets/Textures/enemies/beeto_right_animations.png"
 	        texLeft = "Assets/Textures/enemies/beeto_left_animations.png"/>
@@ -47,7 +48,7 @@
 			  texturepath ="Assets/Textures/items/chicken.png"/>
 
 	  <gems_1 x="200" y="496"
-			 texturepath ="Assets/Textures/items/gem_3.png"/>
+			 texturepath ="Assets/Textures/items/gem_2.png"/>
 	  
 	<!--item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>

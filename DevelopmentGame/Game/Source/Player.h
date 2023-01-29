@@ -40,12 +40,14 @@ private:
 
 	int jumpSound;
 	int landSound;
+	int hitSound;
 
 	const char* texRight = NULL;
 	const char* texLeft = NULL;
 
 	const char* jumpFx = NULL;
 	const char* landFx = NULL;
+	const char* hitFx = NULL;
 
 	//const char* texturePath;
 	//const char* texturerightPath;
@@ -67,6 +69,10 @@ private:
 	float jumpForce = 20.0f;
 
 	int pickCoinFxId;
+
+	int foodSound;
+	int gemSound;
+	int enemySound;
 	fPoint GetPlayerPosition();
 
 public:
@@ -77,6 +83,7 @@ public:
 
 	int numLives = 2;
 	int lifePoints = 125;
+	int points = 0;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction

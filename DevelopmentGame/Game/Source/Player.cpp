@@ -140,6 +140,7 @@ bool Player::Awake() {
 	//Player Fx from XML
 	jumpFx = parameters.attribute("jumpFx").as_string();
 	landFx = parameters.attribute("landFx").as_string();
+	hitFx = parameters.attribute("hitFx").as_string();
 
 	return true;
 }
@@ -153,6 +154,7 @@ bool Player::Start() {
 
 	jumpSound = app->audio->LoadFx(jumpFx);
 	landSound = app->audio->LoadFx(landFx);
+	hitSound = app->audio->LoadFx(hitFx);
 
 	currentAnimation = &idleAnimR;
 
@@ -167,6 +169,9 @@ bool Player::Start() {
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	foodSound = app->audio->LoadFx("Assets/Audio/Fx/food.ogg");
+	gemSound = app->audio->LoadFx("Assets/Audio/Fx/gem_01.ogg");
+	enemySound = app->audio->LoadFx("Assets/Audio/Fx/character_poof_01.ogg");
 
 	inAir = false; //Check if player is on the ground or not
 
@@ -544,7 +549,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			{
 				if (app->scene->player->position.x > 1100 && app->scene->player->position.x < 1400)
 				{
-					app->audio->PlayFx(pickCoinFxId);
+					app->audio->PlayFx(foodSound);
 					lifePoints = lifePoints + 25;
 					app->scene->life->DeleteEntity();
 					lifePicked = true;
@@ -554,7 +559,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			{
 				if (app->scene->player->position.x > 2200 && app->scene->player->position.x < 2500)
 				{
-					app->audio->PlayFx(pickCoinFxId);
+					app->audio->PlayFx(foodSound);
 					lifePoints = lifePoints + 25;
 					app->scene->life_2->DeleteEntity();
 					lifePicked_2 = true;
@@ -565,8 +570,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision GEM");
 			if (!gem_1_Picked)
 			{	
-					app->audio->PlayFx(pickCoinFxId);
+					app->audio->PlayFx(gemSound);
 					app->scene->gem_1->DeleteEntity();
+					points = points + 100;
 					gem_1_Picked = true;
 			}
 			break;
@@ -588,9 +594,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				dive = false;
 				app->scene->enemyDeleted = true;
 				app->scene->floor_enemy->DeleteEntity();
+				app->audio->PlayFx(enemySound);
 			}
 			else
 			{
+				app->audio->PlayFx(hitSound);
 				hit = true;
 			}
 			break;
@@ -602,9 +610,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				app->scene->enemyDeleted = true;
 				app->entityManager->DestroyEntity(app->scene->air_enemy);
 				app->scene->air_enemy->DeleteEntity();
+				app->audio->PlayFx(enemySound);
 			}
 			else
 			{
+				app->audio->PlayFx(hitSound);
 				hit = true;
 			}
 			break;
