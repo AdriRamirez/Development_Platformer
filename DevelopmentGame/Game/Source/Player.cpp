@@ -542,10 +542,23 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision LIFE");
 			if (!lifePicked)
 			{
-				app->audio->PlayFx(pickCoinFxId);
-				lifePoints = lifePoints + 75;
-				app->scene->life->DeleteEntity();
-				lifePicked = true;
+				if (app->scene->player->position.x > 1100 && app->scene->player->position.x < 1400)
+				{
+					app->audio->PlayFx(pickCoinFxId);
+					lifePoints = lifePoints + 25;
+					app->scene->life->DeleteEntity();
+					lifePicked = true;
+				}
+			}	
+			else if (!lifePicked_2)
+			{
+				if (app->scene->player->position.x > 2200 && app->scene->player->position.x < 2500)
+				{
+					app->audio->PlayFx(pickCoinFxId);
+					lifePoints = lifePoints + 25;
+					app->scene->life_2->DeleteEntity();
+					lifePicked_2 = true;
+				}
 			}
 			break;
 		case ColliderType::PLATFORM:

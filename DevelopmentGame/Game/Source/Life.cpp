@@ -109,8 +109,6 @@ bool Life::Draw()
 
 bool Life::DeleteEntity()
 {
-	app->entityManager->lifes++;
-	sprintf_s(app->entityManager->numlifes, 4, "%03d", app->entityManager->lifes);
 	picked = true;
 	//position.x = body->GetPosition().x;
 	//position.y = body->GetPosition().y;

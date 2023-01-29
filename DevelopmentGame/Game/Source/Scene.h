@@ -64,7 +64,6 @@ public:
 	Air_Enemy* air_enemy;
 
 	Life* life;
-
 	Life* life_2;
 
 	bool enemyDeleted = false;
