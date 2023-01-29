@@ -2,24 +2,23 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Map.h"
-#include "Life.h"
+#include "Gem.h"
 #include "Defs.h"
 #include "Log.h"
 
-Life::Life() : Entity(EntityType::LIFE)
+Gem::Gem() : Entity(EntityType::GEM)
 {
-	name.Create("lifes");
-	name.Create("lifes_2");
+	name.Create("gems_1");
 
-	chicken.PushBack({ 0, 0, 54, 36 });
-	chicken.speed = 0.1f;
+	jewel.PushBack({ 0, 0, 54, 36 });
+	jewel.speed = 0.1f;
 }
 
 // Destructor
-Life::~Life()
+Gem::~Gem()
 {}
 
-void Life::InitCustomEntity()
+void Gem::InitCustomEntity()
 {
 
 	b2BodyDef c_body;
@@ -38,33 +37,32 @@ void Life::InitCustomEntity()
 	bodyFixture->SetUserData((void*)8);
 }
 
-bool Life::Awake() {
+bool Gem::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	return true;
 }
 
-bool Life::Start() {
+bool Gem::Start() {
 
-
-	lifeTexture = app->tex->Load(texturePath);
+	gemTexture = app->tex->Load(texturePath);
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 
-	currentLifeAnim = &chicken;
+	currentGemAnim = &jewel;
 
-	// Add a physics to a life - initialize the physics body
-	pbody = app->physics->CreateRectangle(position.x, position.y, 15, 15, bodyType::KINEMATIC);
+	// Add a physics to a gem- initialize the physics body
+	pbody = app->physics->CreateRectangle(position.x, position.y, 20, 20, bodyType::KINEMATIC);
 
 	// Assign collider type
-	pbody->ctype = ColliderType::LIFE;
+	pbody->ctype = ColliderType::GEM;
 
 	return true;
 }
 
 // Called each loop iteration
-bool Life::PreUpdate()
+bool Gem::PreUpdate()
 {
 	position.x = pbody->body->GetPosition().x;
 	position.y = pbody->body->GetPosition().y;
@@ -73,9 +71,9 @@ bool Life::PreUpdate()
 }
 
 // Called each loop iteration
-bool Life::Update()
+bool Gem::Update()
 {
-	currentLifeAnim->Update();
+	currentGemAnim->Update();
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
@@ -86,11 +84,11 @@ bool Life::Update()
 }
 
 // Called each loop iteration
-bool Life::Draw()
+bool Gem::Draw()
 {
 	bool ret = true;
 
-	SDL_Rect rect = currentLifeAnim->GetCurrentFrame();
+	SDL_Rect rect = currentGemAnim->GetCurrentFrame();
 
 	if (plan_to_delete)
 	{
@@ -100,38 +98,34 @@ bool Life::Draw()
 
 	if (!picked)
 	{
-		SDL_Rect rect = currentLifeAnim->GetCurrentFrame();
-		app->render->DrawTexture(lifeTexture, position.x - 10, position.y - 2, &rect);
+		SDL_Rect rect = currentGemAnim->GetCurrentFrame();
+		app->render->DrawTexture(gemTexture, position.x - 10, position.y + 2, &rect);
 	}
 
 	return ret;
 }
 
-bool Life::DeleteEntity()
+bool Gem::DeleteEntity()
 {
 	picked = true;
-	//position.x = body->GetPosition().x;
-	//position.y = body->GetPosition().y;
-	//plan_to_delete = true;
 	app->physics->world->DestroyBody(body);
 	pbody->body->SetActive(false);
 
 	return true;
 }
 
-bool Life::Load(pugi::xml_node& data)
+bool Gem::Load(pugi::xml_node& data)
 {
 	std::string p = "position";
 	std::string s = std::to_string(p_in_array);
 	std::string t = p + s;
 	const char* c = t.c_str();
 
-	if (data.child("lifes").child(c).attribute("state").as_int() == 0)
+	if (data.child("gems_1").child(c).attribute("state").as_int() == 0)
 	{
 		if (picked)
 		{
-			ReloadLife();
-			app->entityManager->lifes--;
+			ReloadGem();
 		}
 	}
 	else
@@ -139,22 +133,10 @@ bool Life::Load(pugi::xml_node& data)
 		picked = true;
 	}
 
-	if (data.child("lifes_2").child(c).attribute("state").as_int() == 0)
-	{
-		if (picked)
-		{
-			ReloadLife();
-			app->entityManager->lifes--;
-		}
-	}
-	else
-	{
-		picked = true;
-	}
 	return true;
 }
 
-bool Life::Save(pugi::xml_node& data)
+bool Gem::Save(pugi::xml_node& data)
 {
 	std::string p = "position";
 	std::string s = std::to_string(p_in_array);
@@ -163,26 +145,26 @@ bool Life::Save(pugi::xml_node& data)
 
 	if (!picked)
 	{
-		data.child("lifes").child(c).attribute("state").set_value("0");
+		data.child("gems_1").child(c).attribute("state").set_value("0");
 	}
 	else
 	{
-		data.child("lifes").child(c).attribute("state").set_value("1");
+		data.child("gems_1").child(c).attribute("state").set_value("1");
 	}
 
 	if (!picked)
 	{
-		data.child("lifes_2").child(c).attribute("state").set_value("0");
+		data.child("gems_2").child(c).attribute("state").set_value("0");
 	}
 	else
 	{
-		data.child("lifes_2").child(c).attribute("state").set_value("1");
+		data.child("gems_2").child(c).attribute("state").set_value("1");
 	}
 
 	return true;
 }
 
-void Life::ReloadLife()
+void Gem::ReloadGem()
 {
 	b2BodyDef c_body;
 	c_body.type = b2_staticBody;

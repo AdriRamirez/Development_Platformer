@@ -45,6 +45,9 @@
 	  
 	 <lifes_2 x="2380" y="496"
 			  texturepath ="Assets/Textures/items/chicken.png"/>
+
+	  <gems_1 x="200" y="496"
+			 texturepath ="Assets/Textures/items/gem_3.png"/>
 	  
 	<!--item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>

@@ -62,6 +62,7 @@ private:
 	bool hit = false;
 	bool lifePicked = false;
 	bool lifePicked_2 = false;
+	bool gem_1_Picked = false;
 
 	float jumpForce = 20.0f;
 

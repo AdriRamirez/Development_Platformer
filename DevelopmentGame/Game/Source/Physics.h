@@ -32,6 +32,7 @@ enum class ColliderType {
 	ENEMY,
 	ENEMYAIR,
 	LIFE,
+	GEM,
 	UNKNOWN
 	// ..
 };

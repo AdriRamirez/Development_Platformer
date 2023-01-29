@@ -99,6 +99,10 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Life();
 		break;
 
+	case EntityType::GEM:
+		entity = new Gem();
+		break;
+
 	case EntityType::FLOOR_ENEMY:
 		entity = new Floor_Enemy();
 		break;

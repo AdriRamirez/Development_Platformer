@@ -12,6 +12,7 @@
 		<air_enemy x="484" y="284" />
 		<lifes x="1184" y="480" />
 		<lifes_2 x="2364" y="480" />
+		<gems_1 />
 	</scene>
 	<entitymanager />
 	<map />

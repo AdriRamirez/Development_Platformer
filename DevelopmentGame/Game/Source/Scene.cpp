@@ -56,6 +56,9 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	life_2 = (Life*)app->entityManager->CreateEntity(EntityType::LIFE);
 	life_2->parameters = config.child("lifes_2");
+
+	gem_1 = (Gem*)app->entityManager->CreateEntity(EntityType::GEM);
+	gem_1->parameters = config.child("gems_1");
 	
 	return ret;
 }
@@ -279,6 +282,12 @@ bool Scene::LoadState(pugi::xml_node& data)
 	lifepos2.x = PIXEL_TO_METERS(life_2->position.x);
 	lifepos2.y = PIXEL_TO_METERS(life_2->position.y);
 
+	gem_1->position.x = data.child("gems_1").attribute("x").as_int();
+	gem_1->position.y = data.child("gems_1").attribute("y").as_int();
+	b2Vec2 gem1pos;
+	gem1pos.x = PIXEL_TO_METERS(gem_1->position.x);
+	gem1pos.y = PIXEL_TO_METERS(gem_1->position.y);
+
 	return true;
 }
 
@@ -289,6 +298,7 @@ bool Scene::SaveState(pugi::xml_node& data)
 	pugi::xml_node aepos = data.append_child("air_enemy");
 	pugi::xml_node lifepos = data.append_child("lifes");
 	pugi::xml_node lifepos2 = data.append_child("lifes_2");
+	pugi::xml_node gem1pos = data.append_child("gems_1");
 
 	pos.append_attribute("x") = player->position.x;
 	pos.append_attribute("y") = player->position.y;

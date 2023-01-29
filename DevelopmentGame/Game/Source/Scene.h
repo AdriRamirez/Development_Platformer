@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "Life.h"
+#include "Gem.h"
 
 struct SDL_Texture;
 
@@ -65,6 +66,8 @@ public:
 
 	Life* life;
 	Life* life_2;
+
+	Gem* gem_1;
 
 	bool enemyDeleted = false;
 

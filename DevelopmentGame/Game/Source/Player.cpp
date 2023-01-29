@@ -561,6 +561,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				}
 			}
 			break;
+		case ColliderType::GEM:
+			LOG("Collision GEM");
+			if (!gem_1_Picked)
+			{	
+					app->audio->PlayFx(pickCoinFxId);
+					app->scene->gem_1->DeleteEntity();
+					gem_1_Picked = true;
+			}
+			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
 			app->audio->PlayFx(landSound);

@@ -17,6 +17,7 @@ enum class EntityType
 	FLOOR_ENEMY,
 	AIR_ENEMY,
 	LIFE,
+	GEM,
 	UNKNOWN
 };
 
